@@ -1,0 +1,68 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "gen-orm",
+            "type": "shell",
+            "command": "go run -mod=mod entgo.io/ent/cmd/ent generate --feature sql/upsert,sql/versioned-migration,sql/modifier ./ent/schema",
+            "options": {
+                "cwd": "${workspaceFolder}/pkg"
+            },
+            "group": {
+                "kind": "build",
+            },
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "goctl-api-auth",
+            "type": "shell",
+            "command": "goctl api go -api auth.api -dir . -style=go_zero",
+            "options": {
+                "cwd": "${workspaceFolder}/app/auth"
+            },
+            "group": {
+                "kind": "build",
+            },
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "goctl-api-doc-auth",
+            "type": "shell",
+            "command": "goctl api plugin -plugin goctl-swagger='swagger -filename auth.json' -api auth.api -dir ./json",
+            "options": {
+                "cwd": "${workspaceFolder}/app/auth/desc"
+            },
+            "group": {
+                "kind": "build",
+            },
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "label": "run-auth",
+            "type": "shell",
+            "command": "go run auth.go -f etc/auth.yaml",
+            "options": {
+                "cwd": "${workspaceFolder}/app/auth/api"
+            },
+            "group": {
+                "kind": "build",
+            },
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+    ],
+    "inputs": [
+        {
+            "id": "modelName",
+            "type": "promptString",
+            "description": "Please enter the model name"
+        }
+    ]
+}

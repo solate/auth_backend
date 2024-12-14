@@ -1,0 +1,83 @@
+syntax = "v1"
+
+// api/user.api
+type (
+	LoginReq {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+
+	LoginResp {
+		Token    string   `json:"token"`
+		UserId   int64    `json:"userId"`
+		Username string   `json:"username"`
+		Nickname string   `json:"nickname"`
+		Roles    []string `json:"roles"`
+	}
+
+	CreateUserReq {
+		Username string  `json:"username"`
+		Password string  `json:"password"`
+		Nickname string  `json:"nickname,optional"`
+		Email    string  `json:"email,optional"`
+		Phone    string  `json:"phone,optional"`
+		RoleIds  []int64 `json:"roleIds,optional"`
+	}
+
+	UpdateUserReq {
+		Id       int64   `path:"id"`
+		Nickname string  `json:"nickname,optional"`
+		Email    string  `json:"email,optional"`
+		Phone    string  `json:"phone,optional"`
+		Status   int8    `json:"status,optional"`
+		RoleIds  []int64 `json:"roleIds,optional"`
+	}
+
+	UserInfo {
+		Id       int64    `json:"id"`
+		Username string   `json:"username"`
+		Nickname string   `json:"nickname"`
+		Email    string   `json:"email"`
+		Phone    string   `json:"phone"`
+		Status   int8     `json:"status"`
+		Roles    []string `json:"roles"`
+	}
+
+	UserListReq {
+		Page     int    `form:"page,default=1"`
+		PageSize int    `form:"pageSize,default=20"`
+		Username string `form:"username,optional"`
+		Status   int8   `form:"status,optional"`
+	}
+
+	UserListResp {
+		Total int64      `json:"total"`
+		List  []UserInfo `json:"list"`
+	}
+)
+
+@server (
+	prefix: /auth/api/v1/user
+	// jwt:   Auth
+	group: user
+)
+
+service auth-api {
+	@handler Login
+	post /api/auth/login (LoginReq) returns (LoginResp)
+
+	@handler CreateUser
+	post /api/users (CreateUserReq) returns (UserInfo)
+
+	@handler UpdateUser
+	put /api/users/:id (UpdateUserReq) returns (UserInfo)
+
+	@handler GetUser
+	get /api/users/:id returns (UserInfo)
+
+	@handler ListUsers
+	get /api/users (UserListReq) returns (UserListResp)
+
+	@handler DeleteUser
+	delete /api/users/:id
+}
