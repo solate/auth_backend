@@ -17,33 +17,33 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/auth/login",
+				Path:    "/create",
+				Handler: user.CreateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/delete",
+				Handler: user.DeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/detail",
+				Handler: user.DetailHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/list",
+				Handler: user.ListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/login",
 				Handler: user.LoginHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/users",
-				Handler: user.CreateUserHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/api/users",
-				Handler: user.ListUsersHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPut,
-				Path:    "/api/users/:id",
-				Handler: user.UpdateUserHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/api/users/:id",
-				Handler: user.GetUserHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodDelete,
-				Path:    "/api/users/:id",
-				Handler: user.DeleteUserHandler(serverCtx),
+				Path:    "/update",
+				Handler: user.UpdateHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/auth/api/v1/user"),

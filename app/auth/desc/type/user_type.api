@@ -1,5 +1,9 @@
 syntax = "v1"
 
+import (
+	"base_type.api"
+)
+
 // api/user.api
 type (
 	LoginReq {
@@ -64,20 +68,20 @@ type (
 
 service auth-api {
 	@handler Login
-	post /api/auth/login (LoginReq) returns (LoginResp)
+	post /login (LoginReq) returns (LoginResp)
 
-	@handler CreateUser
-	post /api/users (CreateUserReq) returns (UserInfo)
+	@handler Create
+	post /create (CreateUserReq) returns (UserInfo)
 
-	@handler UpdateUser
-	put /api/users/:id (UpdateUserReq) returns (UserInfo)
+	@handler Update
+	post /update (UpdateUserReq) returns (UserInfo)
 
-	@handler GetUser
-	get /api/users/:id returns (UserInfo)
+	@handler Detail
+	post /detail returns (UserInfo)
 
-	@handler ListUsers
-	get /api/users (UserListReq) returns (UserListResp)
+	@handler List
+	post /list (UserListReq) returns (UserListResp)
 
-	@handler DeleteUser
-	delete /api/users/:id
+	@handler Delete
+	delete /delete (IDRequest) returns (bool)
 }

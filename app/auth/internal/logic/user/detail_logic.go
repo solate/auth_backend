@@ -9,21 +9,21 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type UpdateUserLogic struct {
+type DetailLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewUpdateUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateUserLogic {
-	return &UpdateUserLogic{
+func NewDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DetailLogic {
+	return &DetailLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *UpdateUserLogic) UpdateUser(req *types.UpdateUserReq) (resp *types.UserInfo, err error) {
+func (l *DetailLogic) Detail() (resp *types.UserInfo, err error) {
 	// todo: add your logic here and delete this line
 
 	return

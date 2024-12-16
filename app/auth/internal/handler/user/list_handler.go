@@ -7,23 +7,22 @@ import (
 	"auth/app/auth/internal/svc"
 	"auth/app/auth/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"hdz-cloud-service/pkg/result"
 )
 
-func ListUsersHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func ListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.UserListReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
-		if err := svcCtx.Validate(&req); err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-			return
-		}
 
-		l := user.NewListUsersLogic(r.Context(), svcCtx)
-		resp, err := l.ListUsers(&req)
-		result.HttpResult(r, w, resp, err)
+		l := user.NewListLogic(r.Context(), svcCtx)
+		resp, err := l.List(&req)
+		if err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+		} else {
+			httpx.OkJsonCtx(r.Context(), w, resp)
+		}
 	}
 }

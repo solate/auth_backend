@@ -9,21 +9,21 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type CreateUserLogic struct {
+type CreateLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewCreateUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateUserLogic {
-	return &CreateUserLogic{
+func NewCreateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateLogic {
+	return &CreateLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *CreateUserLogic) CreateUser(req *types.CreateUserReq) (resp *types.UserInfo, err error) {
+func (l *CreateLogic) Create(req *types.CreateUserReq) (resp *types.UserInfo, err error) {
 	// todo: add your logic here and delete this line
 
 	return
