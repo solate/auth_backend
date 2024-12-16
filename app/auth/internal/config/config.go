@@ -7,7 +7,9 @@ import (
 
 type Config struct {
 	rest.RestConf
-	Logx Logx `json:"Logx"`
+	Logx       Logx `json:"Logx"`
+	DataSource string
+	ShowSQL    bool
 }
 
 type Logx struct {
