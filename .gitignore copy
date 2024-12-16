@@ -1,0 +1,14 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# IntelliJ IDEA workspace files
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/modules.xml
+.idea/misc.xml
+.idea/vcs.xml
+.idea/libraries/
+
+
+tmp

@@ -26,5 +26,10 @@ func NewCreateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateLogi
 func (l *CreateLogic) Create(req *types.CreateUserReq) (resp *types.UserInfo, err error) {
 	// todo: add your logic here and delete this line
 
+	l.Debug("debug")
+	l.Error("error")
+	l.Info("info")
+	l.Slow("slow")
+
 	return
 }

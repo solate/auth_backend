@@ -85,3 +85,13 @@ service auth-api {
 	@handler Delete
 	delete /delete (IDRequest) returns (bool)
 }
+
+// test for ping
+@server (
+	timeout:    3s
+	middleware: PingMiddleware // 自定义的中间件
+)
+service auth-api {
+	@handler Ping
+	get /ping returns (string)
+}

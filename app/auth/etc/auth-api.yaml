@@ -2,3 +2,10 @@ Name: auth-api
 Host: 0.0.0.0
 Port: 8888
 
+
+# logx配置
+Logx:
+  Mode: console
+  Encoding: json
+  Level: debug
+  Stat: false
