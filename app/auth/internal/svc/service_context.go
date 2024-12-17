@@ -6,10 +6,12 @@ import (
 	"auth/pkg/ent"
 	"auth/pkg/ent/migrate"
 	"context"
+	"fmt"
 
 	"entgo.io/ent/dialect"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/stores/redis"
 	"github.com/zeromicro/go-zero/rest"
 )
 
@@ -17,15 +19,15 @@ type ServiceContext struct {
 	Config         config.Config
 	PingMiddleware rest.Middleware // manual added
 	Orm            *ent.Client
+	Redis          *redis.Redis
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
-
-	orm := initOrm(c)
 	return &ServiceContext{
 		Config:         c,
 		PingMiddleware: middleware.NewPingMiddleware().Handle, // manual added
-		Orm:            orm,
+		Orm:            initOrm(c),
+		Redis:          initRedis(c),
 	}
 }
 
@@ -48,4 +50,11 @@ func initOrm(c config.Config) *ent.Client {
 	}
 
 	return client
+}
+
+func initRedis(c config.Config) *redis.Redis {
+	return redis.New(fmt.Sprintf("%s:%d", c.Redis.Host, c.Redis.Port), func(r *redis.Redis) {
+		r.Type = c.Redis.Type
+		r.Pass = c.Redis.Pass
+	})
 }

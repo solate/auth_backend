@@ -7,9 +7,10 @@ import (
 
 type Config struct {
 	rest.RestConf
-	Logx       Logx `json:"Logx"`
 	DataSource string
 	ShowSQL    bool
+	Logx       Logx  `json:"Logx"`
+	Redis      Redis `json:"Redis"`
 }
 
 type Logx struct {
@@ -17,6 +18,13 @@ type Logx struct {
 	Encoding string
 	Level    string
 	Stat     bool
+}
+
+type Redis struct {
+	Host string
+	Type string
+	Pass string
+	Port int
 }
 
 func (c Config) LoadLogConf() {

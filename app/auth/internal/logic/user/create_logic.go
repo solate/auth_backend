@@ -31,5 +31,8 @@ func (l *CreateLogic) Create(req *types.CreateUserReq) (resp *types.UserInfo, er
 	l.Info("info")
 	l.Slow("slow")
 
+	l.svcCtx.Redis.Set("key", "value111")
+	l.Info(l.svcCtx.Redis.Get("key"))
+
 	return
 }

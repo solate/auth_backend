@@ -13,3 +13,11 @@ Logx:
 # DB 配置
 DataSource: root:root@tcp(127.0.0.1:3306)/testdb?parseTime=true&loc=Asia%2FShanghai
 ShowSQL: true
+
+
+# 缓存
+Redis:
+  Host: 127.0.0.1
+  Port: 6379
+  Type: node  # 可以是 node 或 cluster，取决于Redis部署类型
+  Pass:  # 如果Redis设置了密码，请填写这里
