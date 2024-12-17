@@ -2,7 +2,6 @@ package svc
 
 import (
 	"auth/app/auth/internal/config"
-	"auth/app/auth/internal/middleware"
 	"auth/pkg/ent"
 	"auth/pkg/ent/migrate"
 	"context"
@@ -12,22 +11,19 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/redis"
-	"github.com/zeromicro/go-zero/rest"
 )
 
 type ServiceContext struct {
-	Config         config.Config
-	PingMiddleware rest.Middleware // manual added
-	Orm            *ent.Client
-	Redis          *redis.Redis
+	Config config.Config
+	Orm    *ent.Client
+	Redis  *redis.Redis
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
-		Config:         c,
-		PingMiddleware: middleware.NewPingMiddleware().Handle, // manual added
-		Orm:            initOrm(c),
-		Redis:          initRedis(c),
+		Config: c,
+		Orm:    initOrm(c),
+		Redis:  initRedis(c),
 	}
 }
 

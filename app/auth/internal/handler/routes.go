@@ -5,7 +5,6 @@ package handler
 
 import (
 	"net/http"
-	"time"
 
 	user "auth/app/auth/internal/handler/user"
 	"auth/app/auth/internal/svc"
@@ -14,20 +13,6 @@ import (
 )
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
-	server.AddRoutes(
-		rest.WithMiddlewares(
-			[]rest.Middleware{serverCtx.PingMiddleware},
-			[]rest.Route{
-				{
-					Method:  http.MethodGet,
-					Path:    "/ping",
-					Handler: PingHandler(serverCtx),
-				},
-			}...,
-		),
-		rest.WithTimeout(3000*time.Millisecond),
-	)
-
 	server.AddRoutes(
 		[]rest.Route{
 			{
