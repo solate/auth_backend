@@ -21,3 +21,7 @@ Redis:
   Port: 6379
   Type: node  # 可以是 node 或 cluster，取决于Redis部署类型
   Pass:  # 如果Redis设置了密码，请填写这里
+
+
+# 内部Token鉴权
+InnerToken: "123456"

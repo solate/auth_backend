@@ -3,7 +3,11 @@
 package ent
 
 import (
+	"auth/pkg/ent/permission"
+	"auth/pkg/ent/role"
+	"auth/pkg/ent/rolepermission"
 	"auth/pkg/ent/user"
+	"auth/pkg/ent/userrole"
 	"context"
 	"errors"
 	"fmt"
@@ -73,7 +77,11 @@ var (
 func checkColumn(table, column string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			user.Table: user.ValidColumn,
+			permission.Table:     permission.ValidColumn,
+			role.Table:           role.ValidColumn,
+			rolepermission.Table: rolepermission.ValidColumn,
+			user.Table:           user.ValidColumn,
+			userrole.Table:       userrole.ValidColumn,
 		})
 	})
 	return columnCheck(table, column)

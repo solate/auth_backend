@@ -11,6 +11,8 @@ type Config struct {
 	ShowSQL    bool
 	Logx       Logx  `json:"Logx"`
 	Redis      Redis `json:"Redis"`
+
+	InnerToken string
 }
 
 type Logx struct {
