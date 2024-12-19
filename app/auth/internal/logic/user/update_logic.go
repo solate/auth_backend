@@ -15,6 +15,7 @@ type UpdateLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
+// 更新用户
 func NewUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateLogic {
 	return &UpdateLogic{
 		Logger: logx.WithContext(ctx),

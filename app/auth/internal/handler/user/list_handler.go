@@ -9,6 +9,7 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
+// 获取用户列表
 func ListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.UserListReq

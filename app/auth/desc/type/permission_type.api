@@ -1,0 +1,35 @@
+syntax = "v1"
+
+import (
+	"base_type.api"
+)
+
+type (
+	PermissionInfo {
+		Id          int64            `json:"id"`
+		Name        string           `json:"name"`
+		Code        string           `json:"code"`
+		Type        int              `json:"type"`
+		Path        string           `json:"path"`
+		Action      int              `json:"action"`
+		ParentId    int64            `json:"parentId"`
+		Description string           `json:"description"`
+		Status      int8             `json:"status"`
+		Children    []PermissionInfo `json:"children,optional"`
+	}
+
+	PermissionTreeResp {
+		List []PermissionInfo `json:"list"`
+	}
+)
+
+@server(
+	prefix: /api/v1/permission
+	group: permission
+	middleware: Auth
+)
+service auth-api {
+	@doc "获取权限树"
+	@handler Permission
+	post /permissions returns (PermissionTreeResp)
+}

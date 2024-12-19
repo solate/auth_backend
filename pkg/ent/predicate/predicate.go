@@ -12,11 +12,5 @@ type Permission func(*sql.Selector)
 // Role is the predicate function for role builders.
 type Role func(*sql.Selector)
 
-// RolePermission is the predicate function for rolepermission builders.
-type RolePermission func(*sql.Selector)
-
 // User is the predicate function for user builders.
 type User func(*sql.Selector)
-
-// UserRole is the predicate function for userrole builders.
-type UserRole func(*sql.Selector)

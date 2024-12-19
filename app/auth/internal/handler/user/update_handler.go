@@ -9,6 +9,7 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
+// 更新用户
 func UpdateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.UpdateUserReq

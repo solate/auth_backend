@@ -15,6 +15,7 @@ type CreateLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
+// 创建用户
 func NewCreateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateLogic {
 	return &CreateLogic{
 		Logger: logx.WithContext(ctx),

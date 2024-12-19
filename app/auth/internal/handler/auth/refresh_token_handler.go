@@ -1,24 +1,25 @@
-package user
+package auth
 
 import (
 	"net/http"
 
-	"auth/app/auth/internal/logic/user"
+	"auth/app/auth/internal/logic/auth"
 	"auth/app/auth/internal/svc"
 	"auth/app/auth/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func LoginHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+// 刷新Token
+func RefreshTokenHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.LoginReq
+		var req types.RefreshTokenReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := user.NewLoginLogic(r.Context(), svcCtx)
-		resp, err := l.Login(&req)
+		l := auth.NewRefreshTokenLogic(r.Context(), svcCtx)
+		resp, err := l.RefreshToken(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

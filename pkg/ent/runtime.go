@@ -5,10 +5,8 @@ package ent
 import (
 	"auth/pkg/ent/permission"
 	"auth/pkg/ent/role"
-	"auth/pkg/ent/rolepermission"
 	"auth/pkg/ent/schema"
 	"auth/pkg/ent/user"
-	"auth/pkg/ent/userrole"
 	"time"
 )
 
@@ -68,12 +66,6 @@ func init() {
 	role.DefaultUpdatedAt = roleDescUpdatedAt.Default.(func() time.Time)
 	// role.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	role.UpdateDefaultUpdatedAt = roleDescUpdatedAt.UpdateDefault.(func() time.Time)
-	rolepermissionFields := schema.RolePermission{}.Fields()
-	_ = rolepermissionFields
-	// rolepermissionDescCreatedAt is the schema descriptor for created_at field.
-	rolepermissionDescCreatedAt := rolepermissionFields[0].Descriptor()
-	// rolepermission.DefaultCreatedAt holds the default value on creation for the created_at field.
-	rolepermission.DefaultCreatedAt = rolepermissionDescCreatedAt.Default.(func() time.Time)
 	userFields := schema.User{}.Fields()
 	_ = userFields
 	// userDescUsername is the schema descriptor for username field.
@@ -98,10 +90,4 @@ func init() {
 	user.DefaultUpdatedAt = userDescUpdatedAt.Default.(func() time.Time)
 	// user.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	user.UpdateDefaultUpdatedAt = userDescUpdatedAt.UpdateDefault.(func() time.Time)
-	userroleFields := schema.UserRole{}.Fields()
-	_ = userroleFields
-	// userroleDescCreatedAt is the schema descriptor for created_at field.
-	userroleDescCreatedAt := userroleFields[0].Descriptor()
-	// userrole.DefaultCreatedAt holds the default value on creation for the created_at field.
-	userrole.DefaultCreatedAt = userroleDescCreatedAt.Default.(func() time.Time)
 }

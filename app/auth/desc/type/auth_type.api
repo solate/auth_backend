@@ -1,0 +1,59 @@
+syntax = "v1"
+
+info(
+	title: "认证服务接口"
+	desc: "包含登录、注册、token刷新等功能"
+	author: "solate"
+	version: "v1"
+)
+
+type (
+	LoginReq {
+		Username string `json:"username" validate:"required"`
+		Password string `json:"password" validate:"required"`
+	}
+
+	LoginResp {
+		AccessToken  string `json:"accessToken"`
+		TokenType    string `json:"tokenType"`
+		ExpiresIn    int64  `json:"expiresIn"`
+		RefreshToken string `json:"refreshToken,optional"`
+	}
+
+	RefreshTokenReq {
+		RefreshToken string `json:"refreshToken" validate:"required"`
+	}
+
+	UserInfoResp {
+		Id          int64    `json:"id"`
+		Username    string   `json:"username"`
+		Nickname    string   `json:"nickname"`
+		Avatar      string   `json:"avatar"`
+		Email       string   `json:"email"`
+		Phone       string   `json:"phone"`
+		Roles       []string `json:"roles"`
+		Permissions []string `json:"permissions"`
+	}
+)
+
+@server(
+	prefix: /auth/api/v1/auth
+	group: auth
+)
+service auth-api {
+	@doc "用户登录"
+	@handler login
+	post /login (LoginReq) returns (LoginResp)
+
+	@doc "刷新Token"
+	@handler refreshToken
+	post /refresh_token (RefreshTokenReq) returns (LoginResp)
+
+	@doc "获取当前用户信息"
+	@handler userInfo
+	post /user_info returns (UserInfoResp)
+
+	@doc "退出登录"
+	@handler logout
+	post /logout
+}

@@ -30,10 +30,6 @@ const (
 	EdgeUsers = "users"
 	// EdgePermissions holds the string denoting the permissions edge name in mutations.
 	EdgePermissions = "permissions"
-	// EdgeUserRoles holds the string denoting the user_roles edge name in mutations.
-	EdgeUserRoles = "user_roles"
-	// EdgeRolePermissions holds the string denoting the role_permissions edge name in mutations.
-	EdgeRolePermissions = "role_permissions"
 	// Table holds the table name of the role in the database.
 	Table = "roles"
 	// UsersTable is the table that holds the users relation/edge. The primary key declared below.
@@ -46,20 +42,6 @@ const (
 	// PermissionsInverseTable is the table name for the Permission entity.
 	// It exists in this package in order to avoid circular dependency with the "permission" package.
 	PermissionsInverseTable = "permissions"
-	// UserRolesTable is the table that holds the user_roles relation/edge.
-	UserRolesTable = "user_roles"
-	// UserRolesInverseTable is the table name for the UserRole entity.
-	// It exists in this package in order to avoid circular dependency with the "userrole" package.
-	UserRolesInverseTable = "user_roles"
-	// UserRolesColumn is the table column denoting the user_roles relation/edge.
-	UserRolesColumn = "role_id"
-	// RolePermissionsTable is the table that holds the role_permissions relation/edge.
-	RolePermissionsTable = "role_permissions"
-	// RolePermissionsInverseTable is the table name for the RolePermission entity.
-	// It exists in this package in order to avoid circular dependency with the "rolepermission" package.
-	RolePermissionsInverseTable = "role_permissions"
-	// RolePermissionsColumn is the table column denoting the role_permissions relation/edge.
-	RolePermissionsColumn = "role_id"
 )
 
 // Columns holds all SQL columns for role fields.
@@ -172,34 +154,6 @@ func ByPermissions(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
 		sqlgraph.OrderByNeighborTerms(s, newPermissionsStep(), append([]sql.OrderTerm{term}, terms...)...)
 	}
 }
-
-// ByUserRolesCount orders the results by user_roles count.
-func ByUserRolesCount(opts ...sql.OrderTermOption) OrderOption {
-	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborsCount(s, newUserRolesStep(), opts...)
-	}
-}
-
-// ByUserRoles orders the results by user_roles terms.
-func ByUserRoles(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
-	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborTerms(s, newUserRolesStep(), append([]sql.OrderTerm{term}, terms...)...)
-	}
-}
-
-// ByRolePermissionsCount orders the results by role_permissions count.
-func ByRolePermissionsCount(opts ...sql.OrderTermOption) OrderOption {
-	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborsCount(s, newRolePermissionsStep(), opts...)
-	}
-}
-
-// ByRolePermissions orders the results by role_permissions terms.
-func ByRolePermissions(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
-	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborTerms(s, newRolePermissionsStep(), append([]sql.OrderTerm{term}, terms...)...)
-	}
-}
 func newUsersStep() *sqlgraph.Step {
 	return sqlgraph.NewStep(
 		sqlgraph.From(Table, FieldID),
@@ -212,19 +166,5 @@ func newPermissionsStep() *sqlgraph.Step {
 		sqlgraph.From(Table, FieldID),
 		sqlgraph.To(PermissionsInverseTable, FieldID),
 		sqlgraph.Edge(sqlgraph.M2M, false, PermissionsTable, PermissionsPrimaryKey...),
-	)
-}
-func newUserRolesStep() *sqlgraph.Step {
-	return sqlgraph.NewStep(
-		sqlgraph.From(Table, FieldID),
-		sqlgraph.To(UserRolesInverseTable, FieldID),
-		sqlgraph.Edge(sqlgraph.O2M, true, UserRolesTable, UserRolesColumn),
-	)
-}
-func newRolePermissionsStep() *sqlgraph.Step {
-	return sqlgraph.NewStep(
-		sqlgraph.From(Table, FieldID),
-		sqlgraph.To(RolePermissionsInverseTable, FieldID),
-		sqlgraph.Edge(sqlgraph.O2M, true, RolePermissionsTable, RolePermissionsColumn),
 	)
 }

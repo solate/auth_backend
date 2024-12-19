@@ -41,13 +41,9 @@ type RoleEdges struct {
 	Users []*User `json:"users,omitempty"`
 	// Permissions holds the value of the permissions edge.
 	Permissions []*Permission `json:"permissions,omitempty"`
-	// UserRoles holds the value of the user_roles edge.
-	UserRoles []*UserRole `json:"user_roles,omitempty"`
-	// RolePermissions holds the value of the role_permissions edge.
-	RolePermissions []*RolePermission `json:"role_permissions,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [4]bool
+	loadedTypes [2]bool
 }
 
 // UsersOrErr returns the Users value or an error if the edge
@@ -66,24 +62,6 @@ func (e RoleEdges) PermissionsOrErr() ([]*Permission, error) {
 		return e.Permissions, nil
 	}
 	return nil, &NotLoadedError{edge: "permissions"}
-}
-
-// UserRolesOrErr returns the UserRoles value or an error if the edge
-// was not loaded in eager-loading.
-func (e RoleEdges) UserRolesOrErr() ([]*UserRole, error) {
-	if e.loadedTypes[2] {
-		return e.UserRoles, nil
-	}
-	return nil, &NotLoadedError{edge: "user_roles"}
-}
-
-// RolePermissionsOrErr returns the RolePermissions value or an error if the edge
-// was not loaded in eager-loading.
-func (e RoleEdges) RolePermissionsOrErr() ([]*RolePermission, error) {
-	if e.loadedTypes[3] {
-		return e.RolePermissions, nil
-	}
-	return nil, &NotLoadedError{edge: "role_permissions"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -175,16 +153,6 @@ func (r *Role) QueryUsers() *UserQuery {
 // QueryPermissions queries the "permissions" edge of the Role entity.
 func (r *Role) QueryPermissions() *PermissionQuery {
 	return NewRoleClient(r.config).QueryPermissions(r)
-}
-
-// QueryUserRoles queries the "user_roles" edge of the Role entity.
-func (r *Role) QueryUserRoles() *UserRoleQuery {
-	return NewRoleClient(r.config).QueryUserRoles(r)
-}
-
-// QueryRolePermissions queries the "role_permissions" edge of the Role entity.
-func (r *Role) QueryRolePermissions() *RolePermissionQuery {
-	return NewRoleClient(r.config).QueryRolePermissions(r)
 }
 
 // Update returns a builder for updating this Role.

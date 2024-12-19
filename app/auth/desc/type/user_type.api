@@ -6,19 +6,6 @@ import (
 
 // api/user.api
 type (
-	LoginReq {
-		Username string `json:"username"`
-		Password string `json:"password"`
-	}
-
-	LoginResp {
-		Token    string   `json:"token"`
-		UserId   int64    `json:"userId"`
-		Username string   `json:"username"`
-		Nickname string   `json:"nickname"`
-		Roles    []string `json:"roles"`
-	}
-
 	CreateUserReq {
 		Username string  `json:"username"`
 		Password string  `json:"password"`
@@ -37,20 +24,11 @@ type (
 		RoleIds  []int64 `json:"roleIds,optional"`
 	}
 
-	UserInfo {
-		Id       int64    `json:"id"`
-		Username string   `json:"username"`
-		Nickname string   `json:"nickname"`
-		Email    string   `json:"email"`
-		Phone    string   `json:"phone"`
-		Status   int8     `json:"status"`
-		Roles    []string `json:"roles"`
-	}
-
 	UserListReq {
 		Page     int    `form:"page,default=1"`
 		PageSize int    `form:"pageSize,default=20"`
 		Username string `form:"username,optional"`
+		Phone    string `form:"phone,optional"`
 		Status   int8   `form:"status,optional"`
 	}
 
@@ -58,30 +36,42 @@ type (
 		Total int64      `json:"total"`
 		List  []UserInfo `json:"list"`
 	}
+
+	UserInfo {
+		Id        int64    `json:"id"`
+		Username  string   `json:"username"`
+		Nickname  string   `json:"nickname"`
+		Email     string   `json:"email"`
+		Phone     string   `json:"phone"`
+		Status    int8     `json:"status"`
+		Roles     []string `json:"roles"`
+		CreatedAt string   `json:"createdAt"`
+	}
 )
 
 @server (
 	prefix: /auth/api/v1/user
-	// jwt:   Auth
 	group: user
+	middleware: Auth
 )
-
 service auth-api {
-	@handler Login
-	post /login (LoginReq) returns (LoginResp)
-
+	@doc "创建用户"
 	@handler Create
 	post /create (CreateUserReq) returns (UserInfo)
 
+	@doc "更新用户"
 	@handler Update
 	post /update (UpdateUserReq) returns (UserInfo)
 
-	@handler Detail
-	post /detail returns (UserInfo)
-
+	@doc "获取用户列表"
 	@handler List
 	post /list (UserListReq) returns (UserListResp)
 
+	@doc "删除用户"
 	@handler Delete
-	delete /delete (IDRequest) returns (bool)
+	post /delete (IDRequest) returns (bool)
+
+	@doc "获取用户详情"
+	@handler Detail
+	post /detail returns (UserInfo)
 }

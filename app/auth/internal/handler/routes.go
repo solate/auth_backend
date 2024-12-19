@@ -6,6 +6,9 @@ package handler
 import (
 	"net/http"
 
+	auth "auth/app/auth/internal/handler/auth"
+	permission "auth/app/auth/internal/handler/permission"
+	role "auth/app/auth/internal/handler/role"
 	user "auth/app/auth/internal/handler/user"
 	"auth/app/auth/internal/svc"
 
@@ -16,36 +19,123 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
-				Method:  http.MethodPost,
-				Path:    "/create",
-				Handler: user.CreateHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodDelete,
-				Path:    "/delete",
-				Handler: user.DeleteHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/detail",
-				Handler: user.DetailHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/list",
-				Handler: user.ListHandler(serverCtx),
-			},
-			{
+				// 用户登录
 				Method:  http.MethodPost,
 				Path:    "/login",
-				Handler: user.LoginHandler(serverCtx),
+				Handler: auth.LoginHandler(serverCtx),
 			},
 			{
+				// 退出登录
 				Method:  http.MethodPost,
-				Path:    "/update",
-				Handler: user.UpdateHandler(serverCtx),
+				Path:    "/logout",
+				Handler: auth.LogoutHandler(serverCtx),
+			},
+			{
+				// 刷新Token
+				Method:  http.MethodPost,
+				Path:    "/refresh_token",
+				Handler: auth.RefreshTokenHandler(serverCtx),
+			},
+			{
+				// 获取当前用户信息
+				Method:  http.MethodPost,
+				Path:    "/user_info",
+				Handler: auth.UserInfoHandler(serverCtx),
 			},
 		},
+		rest.WithPrefix("/auth/api/v1/auth"),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Auth},
+			[]rest.Route{
+				{
+					// 获取权限树
+					Method:  http.MethodPost,
+					Path:    "/permissions",
+					Handler: permission.PermissionHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/api/v1/permission"),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Auth},
+			[]rest.Route{
+				{
+					// 创建角色
+					Method:  http.MethodPost,
+					Path:    "/create",
+					Handler: role.CreateHandler(serverCtx),
+				},
+				{
+					// 删除角色
+					Method:  http.MethodPost,
+					Path:    "/delete",
+					Handler: role.DeleteHandler(serverCtx),
+				},
+				{
+					// 获取角色详情
+					Method:  http.MethodPost,
+					Path:    "/detail",
+					Handler: role.DetailHandler(serverCtx),
+				},
+				{
+					// 获取角色列表
+					Method:  http.MethodPost,
+					Path:    "/list",
+					Handler: role.ListHandler(serverCtx),
+				},
+				{
+					// 更新角色
+					Method:  http.MethodPut,
+					Path:    "/update",
+					Handler: role.UpdateHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/api/v1/role"),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Auth},
+			[]rest.Route{
+				{
+					// 创建用户
+					Method:  http.MethodPost,
+					Path:    "/create",
+					Handler: user.CreateHandler(serverCtx),
+				},
+				{
+					// 删除用户
+					Method:  http.MethodPost,
+					Path:    "/delete",
+					Handler: user.DeleteHandler(serverCtx),
+				},
+				{
+					// 获取用户详情
+					Method:  http.MethodPost,
+					Path:    "/detail",
+					Handler: user.DetailHandler(serverCtx),
+				},
+				{
+					// 获取用户列表
+					Method:  http.MethodPost,
+					Path:    "/list",
+					Handler: user.ListHandler(serverCtx),
+				},
+				{
+					// 更新用户
+					Method:  http.MethodPost,
+					Path:    "/update",
+					Handler: user.UpdateHandler(serverCtx),
+				},
+			}...,
+		),
 		rest.WithPrefix("/auth/api/v1/user"),
 	)
 }

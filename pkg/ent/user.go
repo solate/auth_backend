@@ -45,11 +45,9 @@ type User struct {
 type UserEdges struct {
 	// Roles holds the value of the roles edge.
 	Roles []*Role `json:"roles,omitempty"`
-	// UserRoles holds the value of the user_roles edge.
-	UserRoles []*UserRole `json:"user_roles,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [2]bool
+	loadedTypes [1]bool
 }
 
 // RolesOrErr returns the Roles value or an error if the edge
@@ -59,15 +57,6 @@ func (e UserEdges) RolesOrErr() ([]*Role, error) {
 		return e.Roles, nil
 	}
 	return nil, &NotLoadedError{edge: "roles"}
-}
-
-// UserRolesOrErr returns the UserRoles value or an error if the edge
-// was not loaded in eager-loading.
-func (e UserEdges) UserRolesOrErr() ([]*UserRole, error) {
-	if e.loadedTypes[1] {
-		return e.UserRoles, nil
-	}
-	return nil, &NotLoadedError{edge: "user_roles"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -172,11 +161,6 @@ func (u *User) Value(name string) (ent.Value, error) {
 // QueryRoles queries the "roles" edge of the User entity.
 func (u *User) QueryRoles() *RoleQuery {
 	return NewUserClient(u.config).QueryRoles(u)
-}
-
-// QueryUserRoles queries the "user_roles" edge of the User entity.
-func (u *User) QueryUserRoles() *UserRoleQuery {
-	return NewUserClient(u.config).QueryUserRoles(u)
 }
 
 // Update returns a builder for updating this User.

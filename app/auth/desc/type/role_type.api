@@ -1,0 +1,70 @@
+syntax = "v1"
+
+import (
+	"base_type.api"
+)
+
+type (
+	CreateRoleReq {
+		Name          string  `json:"name" validate:"required"`
+		Code          string  `json:"code" validate:"required"`
+		Description   string  `json:"description,optional"`
+		PermissionIds []int64 `json:"permissionIds,optional"`
+	}
+
+	UpdateRoleReq {
+		Name          string  `json:"name,optional"`
+		Description   string  `json:"description,optional"`
+		Status        int8    `json:"status,optional"`
+		PermissionIds []int64 `json:"permissionIds,optional"`
+	}
+
+	RoleInfo {
+		Id          int64    `json:"id"`
+		Name        string   `json:"name"`
+		Code        string   `json:"code"`
+		Description string   `json:"description"`
+		Status      int8     `json:"status"`
+		Permissions []string `json:"permissions"`
+		CreatedAt   string   `json:"createdAt"`
+	}
+
+	RoleListReq {
+		Page     int    `form:"page,default=1"`
+		PageSize int    `form:"pageSize,default=20"`
+		Name     string `form:"name,optional"`
+		Status   int8   `form:"status,optional"`
+	}
+
+	RoleListResp {
+		Total int64      `json:"total"`
+		List  []RoleInfo `json:"list"`
+	}
+)
+
+@server(
+	prefix: /api/v1/role
+	group: role
+	middleware: Auth
+)
+service auth-api {
+	@doc "创建角色"
+	@handler Create
+	post /create (CreateRoleReq) returns (RoleInfo)
+
+	@doc "更新角色"
+	@handler Update
+	put /update (UpdateRoleReq) returns (RoleInfo)
+
+	@doc "获取角色详情"
+	@handler Detail
+	post /detail returns (RoleInfo)
+
+	@doc "获取角色列表"
+	@handler List
+	post /list (RoleListReq) returns (RoleListResp)
+
+	@doc "删除角色"
+	@handler Delete
+	post /delete (IDRequest) returns (bool)
+}

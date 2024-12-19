@@ -54,40 +54,6 @@ var (
 			},
 		},
 	}
-	// RolePermissionsColumns holds the columns for the "role_permissions" table.
-	RolePermissionsColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "created_at", Type: field.TypeTime},
-		{Name: "role_id", Type: field.TypeInt},
-		{Name: "permission_id", Type: field.TypeInt},
-	}
-	// RolePermissionsTable holds the schema information for the "role_permissions" table.
-	RolePermissionsTable = &schema.Table{
-		Name:       "role_permissions",
-		Columns:    RolePermissionsColumns,
-		PrimaryKey: []*schema.Column{RolePermissionsColumns[0]},
-		ForeignKeys: []*schema.ForeignKey{
-			{
-				Symbol:     "role_permissions_roles_role",
-				Columns:    []*schema.Column{RolePermissionsColumns[2]},
-				RefColumns: []*schema.Column{RolesColumns[0]},
-				OnDelete:   schema.NoAction,
-			},
-			{
-				Symbol:     "role_permissions_permissions_permission",
-				Columns:    []*schema.Column{RolePermissionsColumns[3]},
-				RefColumns: []*schema.Column{PermissionsColumns[0]},
-				OnDelete:   schema.NoAction,
-			},
-		},
-		Indexes: []*schema.Index{
-			{
-				Name:    "rolepermission_role_id_permission_id",
-				Unique:  true,
-				Columns: []*schema.Column{RolePermissionsColumns[2], RolePermissionsColumns[3]},
-			},
-		},
-	}
 	// UsersColumns holds the columns for the "users" table.
 	UsersColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
@@ -120,10 +86,33 @@ var (
 			},
 		},
 	}
+	// RolePermissionsColumns holds the columns for the "role_permissions" table.
+	RolePermissionsColumns = []*schema.Column{
+		{Name: "role_id", Type: field.TypeInt},
+		{Name: "permission_id", Type: field.TypeInt},
+	}
+	// RolePermissionsTable holds the schema information for the "role_permissions" table.
+	RolePermissionsTable = &schema.Table{
+		Name:       "role_permissions",
+		Columns:    RolePermissionsColumns,
+		PrimaryKey: []*schema.Column{RolePermissionsColumns[0], RolePermissionsColumns[1]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "role_permissions_role_id",
+				Columns:    []*schema.Column{RolePermissionsColumns[0]},
+				RefColumns: []*schema.Column{RolesColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "role_permissions_permission_id",
+				Columns:    []*schema.Column{RolePermissionsColumns[1]},
+				RefColumns: []*schema.Column{PermissionsColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+		},
+	}
 	// UserRolesColumns holds the columns for the "user_roles" table.
 	UserRolesColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "created_at", Type: field.TypeTime},
 		{Name: "user_id", Type: field.TypeInt},
 		{Name: "role_id", Type: field.TypeInt},
 	}
@@ -131,26 +120,19 @@ var (
 	UserRolesTable = &schema.Table{
 		Name:       "user_roles",
 		Columns:    UserRolesColumns,
-		PrimaryKey: []*schema.Column{UserRolesColumns[0]},
+		PrimaryKey: []*schema.Column{UserRolesColumns[0], UserRolesColumns[1]},
 		ForeignKeys: []*schema.ForeignKey{
 			{
-				Symbol:     "user_roles_users_user",
-				Columns:    []*schema.Column{UserRolesColumns[2]},
+				Symbol:     "user_roles_user_id",
+				Columns:    []*schema.Column{UserRolesColumns[0]},
 				RefColumns: []*schema.Column{UsersColumns[0]},
-				OnDelete:   schema.NoAction,
+				OnDelete:   schema.Cascade,
 			},
 			{
-				Symbol:     "user_roles_roles_role",
-				Columns:    []*schema.Column{UserRolesColumns[3]},
+				Symbol:     "user_roles_role_id",
+				Columns:    []*schema.Column{UserRolesColumns[1]},
 				RefColumns: []*schema.Column{RolesColumns[0]},
-				OnDelete:   schema.NoAction,
-			},
-		},
-		Indexes: []*schema.Index{
-			{
-				Name:    "userrole_user_id_role_id",
-				Unique:  true,
-				Columns: []*schema.Column{UserRolesColumns[2], UserRolesColumns[3]},
+				OnDelete:   schema.Cascade,
 			},
 		},
 	}
@@ -158,8 +140,8 @@ var (
 	Tables = []*schema.Table{
 		PermissionsTable,
 		RolesTable,
-		RolePermissionsTable,
 		UsersTable,
+		RolePermissionsTable,
 		UserRolesTable,
 	}
 )
@@ -171,11 +153,11 @@ func init() {
 	RolesTable.Annotation = &entsql.Annotation{
 		Table: "roles",
 	}
-	RolePermissionsTable.ForeignKeys[0].RefTable = RolesTable
-	RolePermissionsTable.ForeignKeys[1].RefTable = PermissionsTable
 	UsersTable.Annotation = &entsql.Annotation{
 		Table: "users",
 	}
+	RolePermissionsTable.ForeignKeys[0].RefTable = RolesTable
+	RolePermissionsTable.ForeignKeys[1].RefTable = PermissionsTable
 	UserRolesTable.ForeignKeys[0].RefTable = UsersTable
 	UserRolesTable.ForeignKeys[1].RefTable = RolesTable
 }

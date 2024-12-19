@@ -3,6 +3,13 @@
 
 package types
 
+type CreateRoleReq struct {
+	Name          string  `json:"name" validate:"required"`
+	Code          string  `json:"code" validate:"required"`
+	Description   string  `json:"description,optional"`
+	PermissionIds []int64 `json:"permissionIds,optional"`
+}
+
 type CreateUserReq struct {
 	Username string  `json:"username"`
 	Password string  `json:"password"`
@@ -17,16 +24,15 @@ type IDRequest struct {
 }
 
 type LoginReq struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username string `json:"username" validate:"required"`
+	Password string `json:"password" validate:"required"`
 }
 
 type LoginResp struct {
-	Token    string   `json:"token"`
-	UserId   int64    `json:"userId"`
-	Username string   `json:"username"`
-	Nickname string   `json:"nickname"`
-	Roles    []string `json:"roles"`
+	AccessToken  string `json:"accessToken"`
+	TokenType    string `json:"tokenType"`
+	ExpiresIn    int64  `json:"expiresIn"`
+	RefreshToken string `json:"refreshToken,optional"`
 }
 
 type PageJsonRequest struct {
@@ -46,9 +52,59 @@ type PageResponse struct {
 	Current         int32 `json:"current"`           // 当前页
 }
 
+type PermissionInfo struct {
+	Id          int64            `json:"id"`
+	Name        string           `json:"name"`
+	Code        string           `json:"code"`
+	Type        int              `json:"type"`
+	Path        string           `json:"path"`
+	Action      int              `json:"action"`
+	ParentId    int64            `json:"parentId"`
+	Description string           `json:"description"`
+	Status      int8             `json:"status"`
+	Children    []PermissionInfo `json:"children,optional"`
+}
+
+type PermissionTreeResp struct {
+	List []PermissionInfo `json:"list"`
+}
+
+type RefreshTokenReq struct {
+	RefreshToken string `json:"refreshToken" validate:"required"`
+}
+
+type RoleInfo struct {
+	Id          int64    `json:"id"`
+	Name        string   `json:"name"`
+	Code        string   `json:"code"`
+	Description string   `json:"description"`
+	Status      int8     `json:"status"`
+	Permissions []string `json:"permissions"`
+	CreatedAt   string   `json:"createdAt"`
+}
+
+type RoleListReq struct {
+	Page     int    `form:"page,default=1"`
+	PageSize int    `form:"pageSize,default=20"`
+	Name     string `form:"name,optional"`
+	Status   int8   `form:"status,optional"`
+}
+
+type RoleListResp struct {
+	Total int64      `json:"total"`
+	List  []RoleInfo `json:"list"`
+}
+
 type TimeRange struct {
 	StartTime string `form:"start_time,optional"` // 开始时间
 	EndTime   string `form:"end_time,optional"`   // 结束时间
+}
+
+type UpdateRoleReq struct {
+	Name          string  `json:"name,optional"`
+	Description   string  `json:"description,optional"`
+	Status        int8    `json:"status,optional"`
+	PermissionIds []int64 `json:"permissionIds,optional"`
 }
 
 type UpdateUserReq struct {
@@ -61,19 +117,32 @@ type UpdateUserReq struct {
 }
 
 type UserInfo struct {
-	Id       int64    `json:"id"`
-	Username string   `json:"username"`
-	Nickname string   `json:"nickname"`
-	Email    string   `json:"email"`
-	Phone    string   `json:"phone"`
-	Status   int8     `json:"status"`
-	Roles    []string `json:"roles"`
+	Id        int64    `json:"id"`
+	Username  string   `json:"username"`
+	Nickname  string   `json:"nickname"`
+	Email     string   `json:"email"`
+	Phone     string   `json:"phone"`
+	Status    int8     `json:"status"`
+	Roles     []string `json:"roles"`
+	CreatedAt string   `json:"createdAt"`
+}
+
+type UserInfoResp struct {
+	Id          int64    `json:"id"`
+	Username    string   `json:"username"`
+	Nickname    string   `json:"nickname"`
+	Avatar      string   `json:"avatar"`
+	Email       string   `json:"email"`
+	Phone       string   `json:"phone"`
+	Roles       []string `json:"roles"`
+	Permissions []string `json:"permissions"`
 }
 
 type UserListReq struct {
 	Page     int    `form:"page,default=1"`
 	PageSize int    `form:"pageSize,default=20"`
 	Username string `form:"username,optional"`
+	Phone    string `form:"phone,optional"`
 	Status   int8   `form:"status,optional"`
 }
 

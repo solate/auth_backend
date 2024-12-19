@@ -36,8 +36,6 @@ const (
 	FieldUpdatedAt = "updated_at"
 	// EdgeRoles holds the string denoting the roles edge name in mutations.
 	EdgeRoles = "roles"
-	// EdgeRolePermissions holds the string denoting the role_permissions edge name in mutations.
-	EdgeRolePermissions = "role_permissions"
 	// Table holds the table name of the permission in the database.
 	Table = "permissions"
 	// RolesTable is the table that holds the roles relation/edge. The primary key declared below.
@@ -45,13 +43,6 @@ const (
 	// RolesInverseTable is the table name for the Role entity.
 	// It exists in this package in order to avoid circular dependency with the "role" package.
 	RolesInverseTable = "roles"
-	// RolePermissionsTable is the table that holds the role_permissions relation/edge.
-	RolePermissionsTable = "role_permissions"
-	// RolePermissionsInverseTable is the table name for the RolePermission entity.
-	// It exists in this package in order to avoid circular dependency with the "rolepermission" package.
-	RolePermissionsInverseTable = "role_permissions"
-	// RolePermissionsColumn is the table column denoting the role_permissions relation/edge.
-	RolePermissionsColumn = "permission_id"
 )
 
 // Columns holds all SQL columns for permission fields.
@@ -173,31 +164,10 @@ func ByRoles(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
 		sqlgraph.OrderByNeighborTerms(s, newRolesStep(), append([]sql.OrderTerm{term}, terms...)...)
 	}
 }
-
-// ByRolePermissionsCount orders the results by role_permissions count.
-func ByRolePermissionsCount(opts ...sql.OrderTermOption) OrderOption {
-	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborsCount(s, newRolePermissionsStep(), opts...)
-	}
-}
-
-// ByRolePermissions orders the results by role_permissions terms.
-func ByRolePermissions(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
-	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborTerms(s, newRolePermissionsStep(), append([]sql.OrderTerm{term}, terms...)...)
-	}
-}
 func newRolesStep() *sqlgraph.Step {
 	return sqlgraph.NewStep(
 		sqlgraph.From(Table, FieldID),
 		sqlgraph.To(RolesInverseTable, FieldID),
 		sqlgraph.Edge(sqlgraph.M2M, true, RolesTable, RolesPrimaryKey...),
-	)
-}
-func newRolePermissionsStep() *sqlgraph.Step {
-	return sqlgraph.NewStep(
-		sqlgraph.From(Table, FieldID),
-		sqlgraph.To(RolePermissionsInverseTable, FieldID),
-		sqlgraph.Edge(sqlgraph.O2M, true, RolePermissionsTable, RolePermissionsColumn),
 	)
 }

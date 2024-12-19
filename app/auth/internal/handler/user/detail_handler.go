@@ -8,6 +8,7 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
+// 获取用户详情
 func DetailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		l := user.NewDetailLogic(r.Context(), svcCtx)

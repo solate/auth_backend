@@ -1,7 +1,0 @@
-syntax = "v1"
-
-import (
-	"desc/type/base_type.api"
-	"desc/type/user_type.api"
-)
-

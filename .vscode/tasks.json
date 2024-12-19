@@ -18,9 +18,9 @@
         {
             "label": "goctl-api-auth",
             "type": "shell",
-            "command": "goctl api go -api auth.api -dir . -style=go_zero",
+            "command": "goctl api go -api auth.api -dir .. -style=go_zero",
             "options": {
-                "cwd": "${workspaceFolder}/app/auth"
+                "cwd": "${workspaceFolder}/app/auth/desc"
             },
             "group": {
                 "kind": "build",
@@ -48,7 +48,7 @@
             "type": "shell",
             "command": "go run auth.go -f etc/auth.yaml",
             "options": {
-                "cwd": "${workspaceFolder}/app/auth/api"
+                "cwd": "${workspaceFolder}/app/auth"
             },
             "group": {
                 "kind": "build",

@@ -2,8 +2,10 @@ package svc
 
 import (
 	"auth/app/auth/internal/config"
+	"auth/app/auth/internal/middleware"
 	"auth/pkg/ent"
 	"auth/pkg/ent/migrate"
+	"auth/pkg/utils/cache"
 	"context"
 	"fmt"
 
@@ -14,16 +16,24 @@ import (
 )
 
 type ServiceContext struct {
-	Config config.Config
-	Orm    *ent.Client
-	Redis  *redis.Redis
+	Config          config.Config
+	Orm             *ent.Client
+	Redis           *redis.Redis
+	AuthMiddleware  *middleware.AuthMiddleware
+	PermissionCache *cache.PermissionCache
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
+
+	client := initOrm(c)
+	rdb := initRedis(c)
+
 	return &ServiceContext{
-		Config: c,
-		Orm:    initOrm(c),
-		Redis:  initRedis(c),
+		Config:          c,
+		Orm:             client,
+		Redis:           initRedis(c),
+		AuthMiddleware:  middleware.NewAuthMiddleware(c, client),
+		PermissionCache: cache.NewPermissionCache(rdb),
 	}
 }
 

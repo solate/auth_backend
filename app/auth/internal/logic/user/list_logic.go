@@ -15,6 +15,7 @@ type ListLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
+// 获取用户列表
 func NewListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListLogic {
 	return &ListLogic{
 		Logger: logx.WithContext(ctx),
