@@ -5,19 +5,73 @@ import (
 )
 
 type (
+	// 权限信息
 	PermissionInfo {
 		Id          int64            `json:"id"`
-		Name        string           `json:"name"`
-		Code        string           `json:"code"`
-		Type        int              `json:"type"`
-		Path        string           `json:"path"`
-		Action      int              `json:"action"`
-		ParentId    int64            `json:"parentId"`
-		Description string           `json:"description"`
-		Status      int8             `json:"status"`
-		Children    []PermissionInfo `json:"children,optional"`
+		Name        string           `json:"name"`                 // 权限名称
+		Code        string           `json:"code"`                 // 权限标识
+		Type        int              `json:"type"`                 // 类型(1:目录,2:菜单,3:按钮)
+		Path        string           `json:"path"`                 // 路径
+		Method      string           `json:"method,optional"`      // HTTP方法
+		ParentId    int64            `json:"parentId"`             // 父级ID
+		Icon        string           `json:"icon,optional"`        // 图标
+		Component   string           `json:"component,optional"`   // 前端组件
+		Sort        int              `json:"sort"`                 // 排序
+		Status      int8             `json:"status"`               // 状态(0:禁用,1:启用)
+		Description string           `json:"description,optional"` // 描述
+		Children    []PermissionInfo `json:"children,optional"`    // 子权限
+		CreatedAt   int64            `json:"createdAt"`            // 创建时间
+		UpdatedAt   int64            `json:"updatedAt"`            // 更新时间
 	}
 
+	// 创建权限请求
+	CreatePermissionReq {
+		Name        string `json:"name"`                 // 权限名称
+		Code        string `json:"code"`                 // 权限标识
+		Type        int    `json:"type"`                 // 类型
+		Path        string `json:"path,optional"`        // 路径
+		Method      string `json:"method,optional"`      // HTTP方法
+		ParentId    int64  `json:"parentId"`             // 父级ID
+		Icon        string `json:"icon,optional"`        // 图标
+		Component   string `json:"component,optional"`   // 前端组件
+		Sort        int    `json:"sort,default=0"`       // 排序
+		Description string `json:"description,optional"` // 描述
+	}
+
+	// 更新权限请求
+	UpdatePermissionReq {
+		Id          int64  `json:"id"`                   // 权限ID
+		Name        string `json:"name,optional"`        // 权限名称
+		Code        string `json:"code,optional"`        // 权限标识
+		Type        int    `json:"type,optional"`        // 类型
+		Path        string `json:"path,optional"`        // 路径
+		Method      string `json:"method,optional"`      // HTTP方法
+		ParentId    int64  `json:"parentId,optional"`    // 父级ID
+		Icon        string `json:"icon,optional"`        // 图标
+		Component   string `json:"component,optional"`   // 前端组件
+		Sort        int    `json:"sort,optional"`        // 排序
+		Status      int8   `json:"status,optional"`      // 状态
+		Description string `json:"description,optional"` // 描述
+	}
+
+	// 权限列表请求
+	PermissionListReq {
+		Name     string `form:"name,optional"`       // 权限名称
+		Code     string `form:"code,optional"`       // 权限标识
+		Type     int    `form:"type,optional"`       // 类型
+		Status   int8   `form:"status,optional"`     // 状态
+		ParentId int64  `form:"parentId,optional"`   // 父级ID
+		Page     int64  `form:"page,default=1"`      // 页码
+		PageSize int64  `form:"pageSize,default=20"` // 每页数量
+	}
+
+	// 权限列表响应
+	PermissionListResp {
+		Total int64            `json:"total"`
+		List  []PermissionInfo `json:"list"`
+	}
+
+	// 权限树响应
 	PermissionTreeResp {
 		List []PermissionInfo `json:"list"`
 	}
@@ -26,10 +80,38 @@ type (
 @server(
 	prefix: /api/v1/permission
 	group: permission
-	middleware: Auth
+	middleware: AuthMiddleware
 )
 service auth-api {
 	@doc "获取权限树"
-	@handler Permission
-	post /permissions returns (PermissionTreeResp)
+	@handler Tree
+	post /tree returns (PermissionTreeResp)
+
+	@doc "获取权限列表"
+	@handler List
+	post /list (PermissionListReq) returns (PermissionListResp)
+
+	@doc "创建权限"
+	@handler Create
+	post /create (CreatePermissionReq) returns (PermissionInfo)
+
+	@doc "更新权限"
+	@handler Update
+	post /update (UpdatePermissionReq) returns (PermissionInfo)
+
+	@doc "删除权限"
+	@handler Delete
+	post /delete (IDRequest) returns (bool)
+
+	@doc "获取权限详情"
+	@handler Detail
+	post /detail (IDRequest) returns (PermissionInfo)
+
+	@doc "更新权限状态"
+	@handler Status
+	post /status (IDRequest) returns (bool)
+
+	// @doc "批量删除权限"
+	// @handler BatchpostPermission
+	// post /batch (IDBatchReq) returns (bool)
 }

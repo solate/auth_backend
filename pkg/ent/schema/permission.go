@@ -33,7 +33,7 @@ func (Permission) Fields() []ent.Field {
 		field.Int("action").Default(1).Optional().Comment("操作类型: 1:all 2:read 3:write"),
 		field.Int("parent_id").Optional().Comment("父级ID"),
 		field.String("description").Optional().Comment("描述"),
-		field.Int8("status").Default(1).Comment("状态 1:启用 2:禁用"),
+		field.Int("status").Default(1).Comment("状态 1:启用 2:禁用"),
 		field.Time("created_at").Default(time.Now),
 		field.Time("updated_at").Default(time.Now).UpdateDefault(time.Now),
 	}

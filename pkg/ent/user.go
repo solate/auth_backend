@@ -17,20 +17,34 @@ type User struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// 用户名
-	Username string `json:"username,omitempty"`
-	// 密码
-	Password string `json:"-"`
-	// 昵称
-	Nickname string `json:"nickname,omitempty"`
-	// 头像
-	Avatar string `json:"avatar,omitempty"`
+	// 编号
+	No string `json:"no,omitempty"`
+	// 角色，1：超级管理员 2：代理商 3：商户 --  废弃
+	Role int `json:"role,omitempty"`
+	// 真实姓名
+	Name string `json:"name,omitempty"`
+	// 电话
+	Phone string `json:"phone,omitempty"`
 	// 邮箱
 	Email string `json:"email,omitempty"`
-	// 手机号
-	Phone string `json:"phone,omitempty"`
+	// 性别，1：男 2：女
+	Gender int `json:"gender,omitempty"`
+	// hash后的密码
+	PwdHashed string `json:"pwd_hashed,omitempty"`
+	// 密码加盐
+	PwdSalt string `json:"pwd_salt,omitempty"`
+	// 登录后的token信息
+	Token string `json:"token,omitempty"`
+	// 禁用状态，0：正常 1：禁用
+	DisableStatus int `json:"disable_status,omitempty"`
+	// 所属企业
+	Company string `json:"company,omitempty"`
+	// 上级禁用状态，0：正常 1：禁用
+	ParentDisableStatus int `json:"parent_disable_status,omitempty"`
+	// 用户头像
+	Icon string `json:"icon,omitempty"`
 	// 状态: 1:启用, 2:禁用
-	Status int8 `json:"status,omitempty"`
+	Status int `json:"status,omitempty"`
 	// 创建时间
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// 更新时间
@@ -64,9 +78,9 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case user.FieldID, user.FieldStatus:
+		case user.FieldID, user.FieldRole, user.FieldGender, user.FieldDisableStatus, user.FieldParentDisableStatus, user.FieldStatus:
 			values[i] = new(sql.NullInt64)
-		case user.FieldUsername, user.FieldPassword, user.FieldNickname, user.FieldAvatar, user.FieldEmail, user.FieldPhone:
+		case user.FieldNo, user.FieldName, user.FieldPhone, user.FieldEmail, user.FieldPwdHashed, user.FieldPwdSalt, user.FieldToken, user.FieldCompany, user.FieldIcon:
 			values[i] = new(sql.NullString)
 		case user.FieldCreatedAt, user.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -91,35 +105,23 @@ func (u *User) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			u.ID = int(value.Int64)
-		case user.FieldUsername:
+		case user.FieldNo:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field username", values[i])
+				return fmt.Errorf("unexpected type %T for field no", values[i])
 			} else if value.Valid {
-				u.Username = value.String
+				u.No = value.String
 			}
-		case user.FieldPassword:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field password", values[i])
+		case user.FieldRole:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field role", values[i])
 			} else if value.Valid {
-				u.Password = value.String
+				u.Role = int(value.Int64)
 			}
-		case user.FieldNickname:
+		case user.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field nickname", values[i])
+				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				u.Nickname = value.String
-			}
-		case user.FieldAvatar:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field avatar", values[i])
-			} else if value.Valid {
-				u.Avatar = value.String
-			}
-		case user.FieldEmail:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field email", values[i])
-			} else if value.Valid {
-				u.Email = value.String
+				u.Name = value.String
 			}
 		case user.FieldPhone:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -127,11 +129,65 @@ func (u *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				u.Phone = value.String
 			}
+		case user.FieldEmail:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field email", values[i])
+			} else if value.Valid {
+				u.Email = value.String
+			}
+		case user.FieldGender:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field gender", values[i])
+			} else if value.Valid {
+				u.Gender = int(value.Int64)
+			}
+		case user.FieldPwdHashed:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field pwd_hashed", values[i])
+			} else if value.Valid {
+				u.PwdHashed = value.String
+			}
+		case user.FieldPwdSalt:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field pwd_salt", values[i])
+			} else if value.Valid {
+				u.PwdSalt = value.String
+			}
+		case user.FieldToken:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field token", values[i])
+			} else if value.Valid {
+				u.Token = value.String
+			}
+		case user.FieldDisableStatus:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field disable_status", values[i])
+			} else if value.Valid {
+				u.DisableStatus = int(value.Int64)
+			}
+		case user.FieldCompany:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field company", values[i])
+			} else if value.Valid {
+				u.Company = value.String
+			}
+		case user.FieldParentDisableStatus:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field parent_disable_status", values[i])
+			} else if value.Valid {
+				u.ParentDisableStatus = int(value.Int64)
+			}
+		case user.FieldIcon:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field icon", values[i])
+			} else if value.Valid {
+				u.Icon = value.String
+			}
 		case user.FieldStatus:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
-				u.Status = int8(value.Int64)
+				u.Status = int(value.Int64)
 			}
 		case user.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -186,22 +242,44 @@ func (u *User) String() string {
 	var builder strings.Builder
 	builder.WriteString("User(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", u.ID))
-	builder.WriteString("username=")
-	builder.WriteString(u.Username)
+	builder.WriteString("no=")
+	builder.WriteString(u.No)
 	builder.WriteString(", ")
-	builder.WriteString("password=<sensitive>")
+	builder.WriteString("role=")
+	builder.WriteString(fmt.Sprintf("%v", u.Role))
 	builder.WriteString(", ")
-	builder.WriteString("nickname=")
-	builder.WriteString(u.Nickname)
+	builder.WriteString("name=")
+	builder.WriteString(u.Name)
 	builder.WriteString(", ")
-	builder.WriteString("avatar=")
-	builder.WriteString(u.Avatar)
+	builder.WriteString("phone=")
+	builder.WriteString(u.Phone)
 	builder.WriteString(", ")
 	builder.WriteString("email=")
 	builder.WriteString(u.Email)
 	builder.WriteString(", ")
-	builder.WriteString("phone=")
-	builder.WriteString(u.Phone)
+	builder.WriteString("gender=")
+	builder.WriteString(fmt.Sprintf("%v", u.Gender))
+	builder.WriteString(", ")
+	builder.WriteString("pwd_hashed=")
+	builder.WriteString(u.PwdHashed)
+	builder.WriteString(", ")
+	builder.WriteString("pwd_salt=")
+	builder.WriteString(u.PwdSalt)
+	builder.WriteString(", ")
+	builder.WriteString("token=")
+	builder.WriteString(u.Token)
+	builder.WriteString(", ")
+	builder.WriteString("disable_status=")
+	builder.WriteString(fmt.Sprintf("%v", u.DisableStatus))
+	builder.WriteString(", ")
+	builder.WriteString("company=")
+	builder.WriteString(u.Company)
+	builder.WriteString(", ")
+	builder.WriteString("parent_disable_status=")
+	builder.WriteString(fmt.Sprintf("%v", u.ParentDisableStatus))
+	builder.WriteString(", ")
+	builder.WriteString("icon=")
+	builder.WriteString(u.Icon)
 	builder.WriteString(", ")
 	builder.WriteString("status=")
 	builder.WriteString(fmt.Sprintf("%v", u.Status))

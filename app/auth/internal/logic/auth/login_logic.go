@@ -25,7 +25,39 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err error) {
-	// todo: add your logic here and delete this line
+	// // 1. 验证用户名密码
+	// user, err := l.svcCtx.Orm.User.Query().
+	// 	Where(builder.Eq(sqlbuilder.Field{
+	// 		Table:  "user",
+	// 		Column: "username",
+	// 	}, req.Username)).
+	// 	First(l.ctx)
+	// if err != nil {
+	// 	return nil, errors.New("用户名或密码错误")
+	// }
 
-	return
+	// // 2. 验证密码
+	// if !utils.ComparePassword(user.Password, req.Password) {
+	// 	return nil, errors.New("用户名或密码错误")
+	// }
+
+	// // 3. 生成访问令牌和刷新令牌
+	// accessToken, err := utils.GenerateToken(user.ID, user.Username, time.Hour*24)
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	// refreshToken, err := utils.GenerateToken(user.ID, user.Username, time.Hour*24*7)
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	// return &types.LoginResp{
+	// 	AccessToken:  accessToken,
+	// 	RefreshToken: refreshToken,
+	// 	TokenType:    "Bearer",
+	// 	ExpiresIn:    24 * 3600,
+	// }, nil
+
+	return nil, nil
 }

@@ -32,7 +32,7 @@ type Permission struct {
 	// 描述
 	Description string `json:"description,omitempty"`
 	// 状态 1:启用 2:禁用
-	Status int8 `json:"status,omitempty"`
+	Status int `json:"status,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// UpdatedAt holds the value of the "updated_at" field.
@@ -139,7 +139,7 @@ func (pe *Permission) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
-				pe.Status = int8(value.Int64)
+				pe.Status = int(value.Int64)
 			}
 		case permission.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {

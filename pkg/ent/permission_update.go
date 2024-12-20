@@ -174,14 +174,14 @@ func (pu *PermissionUpdate) ClearDescription() *PermissionUpdate {
 }
 
 // SetStatus sets the "status" field.
-func (pu *PermissionUpdate) SetStatus(i int8) *PermissionUpdate {
+func (pu *PermissionUpdate) SetStatus(i int) *PermissionUpdate {
 	pu.mutation.ResetStatus()
 	pu.mutation.SetStatus(i)
 	return pu
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (pu *PermissionUpdate) SetNillableStatus(i *int8) *PermissionUpdate {
+func (pu *PermissionUpdate) SetNillableStatus(i *int) *PermissionUpdate {
 	if i != nil {
 		pu.SetStatus(*i)
 	}
@@ -189,7 +189,7 @@ func (pu *PermissionUpdate) SetNillableStatus(i *int8) *PermissionUpdate {
 }
 
 // AddStatus adds i to the "status" field.
-func (pu *PermissionUpdate) AddStatus(i int8) *PermissionUpdate {
+func (pu *PermissionUpdate) AddStatus(i int) *PermissionUpdate {
 	pu.mutation.AddStatus(i)
 	return pu
 }
@@ -367,10 +367,10 @@ func (pu *PermissionUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.ClearField(permission.FieldDescription, field.TypeString)
 	}
 	if value, ok := pu.mutation.Status(); ok {
-		_spec.SetField(permission.FieldStatus, field.TypeInt8, value)
+		_spec.SetField(permission.FieldStatus, field.TypeInt, value)
 	}
 	if value, ok := pu.mutation.AddedStatus(); ok {
-		_spec.AddField(permission.FieldStatus, field.TypeInt8, value)
+		_spec.AddField(permission.FieldStatus, field.TypeInt, value)
 	}
 	if value, ok := pu.mutation.CreatedAt(); ok {
 		_spec.SetField(permission.FieldCreatedAt, field.TypeTime, value)
@@ -589,14 +589,14 @@ func (puo *PermissionUpdateOne) ClearDescription() *PermissionUpdateOne {
 }
 
 // SetStatus sets the "status" field.
-func (puo *PermissionUpdateOne) SetStatus(i int8) *PermissionUpdateOne {
+func (puo *PermissionUpdateOne) SetStatus(i int) *PermissionUpdateOne {
 	puo.mutation.ResetStatus()
 	puo.mutation.SetStatus(i)
 	return puo
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (puo *PermissionUpdateOne) SetNillableStatus(i *int8) *PermissionUpdateOne {
+func (puo *PermissionUpdateOne) SetNillableStatus(i *int) *PermissionUpdateOne {
 	if i != nil {
 		puo.SetStatus(*i)
 	}
@@ -604,7 +604,7 @@ func (puo *PermissionUpdateOne) SetNillableStatus(i *int8) *PermissionUpdateOne 
 }
 
 // AddStatus adds i to the "status" field.
-func (puo *PermissionUpdateOne) AddStatus(i int8) *PermissionUpdateOne {
+func (puo *PermissionUpdateOne) AddStatus(i int) *PermissionUpdateOne {
 	puo.mutation.AddStatus(i)
 	return puo
 }
@@ -812,10 +812,10 @@ func (puo *PermissionUpdateOne) sqlSave(ctx context.Context) (_node *Permission,
 		_spec.ClearField(permission.FieldDescription, field.TypeString)
 	}
 	if value, ok := puo.mutation.Status(); ok {
-		_spec.SetField(permission.FieldStatus, field.TypeInt8, value)
+		_spec.SetField(permission.FieldStatus, field.TypeInt, value)
 	}
 	if value, ok := puo.mutation.AddedStatus(); ok {
-		_spec.AddField(permission.FieldStatus, field.TypeInt8, value)
+		_spec.AddField(permission.FieldStatus, field.TypeInt, value)
 	}
 	if value, ok := puo.mutation.CreatedAt(); ok {
 		_spec.SetField(permission.FieldCreatedAt, field.TypeTime, value)

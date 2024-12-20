@@ -24,8 +24,29 @@ func NewDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DetailLogi
 	}
 }
 
-func (l *DetailLogic) Detail() (resp *types.RoleInfo, err error) {
-	// todo: add your logic here and delete this line
+func (l *DetailLogic) Detail(req *types.IDRequest) (resp *types.RoleInfo, err error) {
+	// // 1. 查询角色详情
+	// role, err := l.svcCtx.DB.Role.Query().
+	// 	Where(role.ID(req.ID)).
+	// 	WithPermissions().
+	// 	First(l.ctx)
+	// if err != nil {
+	// 	return nil, errors.New("角色不存在")
+	// }
 
-	return
+	// // 2. 构建权限列表
+	// permissions := make([]int64, 0)
+	// for _, p := range role.Edges.Permissions {
+	// 	permissions = append(permissions, p.ID)
+	// }
+
+	// return &types.RoleInfo{
+	// 	ID:          role.ID,
+	// 	Name:        role.Name,
+	// 	Description: role.Description,
+	// 	Status:      role.Status,
+	// 	Permissions: permissions,
+	// }, nil
+
+	return nil, nil
 }

@@ -48,13 +48,49 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 
 	server.AddRoutes(
 		rest.WithMiddlewares(
-			[]rest.Middleware{serverCtx.Auth},
+			[]rest.Middleware{serverCtx.AuthMiddleware},
 			[]rest.Route{
+				{
+					// 创建权限
+					Method:  http.MethodPost,
+					Path:    "/create",
+					Handler: permission.CreateHandler(serverCtx),
+				},
+				{
+					// 删除权限
+					Method:  http.MethodPost,
+					Path:    "/delete",
+					Handler: permission.DeleteHandler(serverCtx),
+				},
+				{
+					// 获取权限详情
+					Method:  http.MethodPost,
+					Path:    "/detail",
+					Handler: permission.DetailHandler(serverCtx),
+				},
+				{
+					// 获取权限列表
+					Method:  http.MethodPost,
+					Path:    "/list",
+					Handler: permission.ListHandler(serverCtx),
+				},
+				{
+					// 更新权限状态
+					Method:  http.MethodPost,
+					Path:    "/status",
+					Handler: permission.StatusHandler(serverCtx),
+				},
 				{
 					// 获取权限树
 					Method:  http.MethodPost,
-					Path:    "/permissions",
-					Handler: permission.PermissionHandler(serverCtx),
+					Path:    "/tree",
+					Handler: permission.TreeHandler(serverCtx),
+				},
+				{
+					// 更新权限
+					Method:  http.MethodPost,
+					Path:    "/update",
+					Handler: permission.UpdateHandler(serverCtx),
 				},
 			}...,
 		),
@@ -63,7 +99,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 
 	server.AddRoutes(
 		rest.WithMiddlewares(
-			[]rest.Middleware{serverCtx.Auth},
+			[]rest.Middleware{serverCtx.AuthMiddleware},
 			[]rest.Route{
 				{
 					// 创建角色
@@ -102,19 +138,13 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 
 	server.AddRoutes(
 		rest.WithMiddlewares(
-			[]rest.Middleware{serverCtx.Auth},
+			[]rest.Middleware{serverCtx.AuthMiddleware},
 			[]rest.Route{
 				{
 					// 创建用户
 					Method:  http.MethodPost,
 					Path:    "/create",
 					Handler: user.CreateHandler(serverCtx),
-				},
-				{
-					// 删除用户
-					Method:  http.MethodPost,
-					Path:    "/delete",
-					Handler: user.DeleteHandler(serverCtx),
 				},
 				{
 					// 获取用户详情
@@ -129,10 +159,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Handler: user.ListHandler(serverCtx),
 				},
 				{
-					// 更新用户
+					// 修改用户密码
 					Method:  http.MethodPost,
-					Path:    "/update",
-					Handler: user.UpdateHandler(serverCtx),
+					Path:    "/password",
+					Handler: user.PasswordHandler(serverCtx),
+				},
+				{
+					// 修改用户状态
+					Method:  http.MethodPost,
+					Path:    "/status",
+					Handler: user.StatusHandler(serverCtx),
 				},
 			}...,
 		),

@@ -84,7 +84,7 @@ var (
 	// DefaultAction holds the default value on creation for the "action" field.
 	DefaultAction int
 	// DefaultStatus holds the default value on creation for the "status" field.
-	DefaultStatus int8
+	DefaultStatus int
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.

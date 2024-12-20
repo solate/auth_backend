@@ -25,7 +25,21 @@ func NewDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DeleteLogi
 }
 
 func (l *DeleteLogic) Delete(req *types.IDRequest) (resp bool, err error) {
-	// todo: add your logic here and delete this line
+	// TODO 删除用户暂时没有需求
 
-	return
+	// // 1. 检查用户是否存在
+	// user, err := l.svcCtx.DB.User.Query().
+	// 	Where(user.ID(req.ID)).
+	// 	First(l.ctx)
+	// if err != nil {
+	// 	return false, errors.New("用户不存在")
+	// }
+
+	// // 2. 删除用户
+	// err = l.svcCtx.DB.User.DeleteOne(user).Exec(l.ctx)
+	// if err != nil {
+	// 	return false, err
+	// }
+
+	return true, nil
 }

@@ -7,71 +7,89 @@ import (
 // api/user.api
 type (
 	CreateUserReq {
-		Username string  `json:"username"`
-		Password string  `json:"password"`
-		Nickname string  `json:"nickname,optional"`
-		Email    string  `json:"email,optional"`
-		Phone    string  `json:"phone,optional"`
-		RoleIds  []int64 `json:"roleIds,optional"`
+		No                  string `json:"no"`
+		Name                string `json:"name"`
+		Phone               string `json:"phone"`
+		Role                int    `json:"role"`
+		PwdHashed           string `json:"pwd_hashed"`
+		PwdSalt             string `json:"pwd_salt"`
+		DisableStatus       int    `json:"disable_status"`
+		ParentDisableStatus int    `json:"parent_disable_status"`
+		Company             string `json:"company"`
+		Email               string `json:"email"`
+		Gender              int    `json:"gender"`
+		Icon                string `json:"icon"`
+		Roles               []int  `json:"roles"` // 角色ID列表
 	}
 
 	UpdateUserReq {
-		Id       int64   `path:"id"`
-		Nickname string  `json:"nickname,optional"`
-		Email    string  `json:"email,optional"`
-		Phone    string  `json:"phone,optional"`
-		Status   int8    `json:"status,optional"`
-		RoleIds  []int64 `json:"roleIds,optional"`
+		Id   int64  `path:"id"`
+		Name string `json:"name"`
 	}
 
 	UserListReq {
-		Page     int    `form:"page,default=1"`
-		PageSize int    `form:"pageSize,default=20"`
-		Username string `form:"username,optional"`
-		Phone    string `form:"phone,optional"`
-		Status   int8   `form:"status,optional"`
+		PageRequest
+		Name   string `form:"name,optional"`
+		Phone  string `form:"phone,optional"`
+		Status int    `form:"status,optional"`
 	}
 
 	UserListResp {
-		Total int64      `json:"total"`
-		List  []UserInfo `json:"list"`
+		Page *PageResponse       `json:"page"` // 分页
+		List []*UserInfoResponse `json:"list"` // 列表
 	}
 
-	UserInfo {
-		Id        int64    `json:"id"`
-		Username  string   `json:"username"`
-		Nickname  string   `json:"nickname"`
-		Email     string   `json:"email"`
-		Phone     string   `json:"phone"`
-		Status    int8     `json:"status"`
-		Roles     []string `json:"roles"`
-		CreatedAt string   `json:"createdAt"`
+	UserInfoResponse {
+		ID      int    `json:"id"`       // 用户id
+		Uid     int    `json:"uid"`      // 用户id
+		Name    string `json:"name"`     // 企业名称
+		No      string `json:"no"`       // 企业编号
+		Phone   string `json:"phone"`    // 企业号码
+		StartAt string `json:"start_at"` // 合作开始时间
+		EndAt   string `json:"end_at"`   // 合作结束时间
+		// Name        string `json:"contact"`      // 联系人名称
+		Email       string `json:"email"`        // 邮箱
+		Province    string `json:"province"`     // 所在省份
+		City        string `json:"city"`         // 所在地区
+		Address     string `json:"address"`      // 具体地址
+		CompanyDesc string `json:"company_desc"` // 企业介绍
+		Status      int    `json:"status"`       // 状态
+		Roles       []int  `json:"roles"`        // 角色ID列表
 	}
 )
 
 @server (
 	prefix: /auth/api/v1/user
 	group: user
-	middleware: Auth
+	middleware: AuthMiddleware
 )
 service auth-api {
 	@doc "创建用户"
 	@handler Create
-	post /create (CreateUserReq) returns (UserInfo)
+	post /create (CreateUserReq) returns (UserInfoResponse)
 
-	@doc "更新用户"
-	@handler Update
-	post /update (UpdateUserReq) returns (UserInfo)
+	// @doc "更新用户"
+	// @handler Update
+	// post /update (UpdateUserReq) returns (UserInfoResponse)
 
 	@doc "获取用户列表"
 	@handler List
 	post /list (UserListReq) returns (UserListResp)
 
-	@doc "删除用户"
-	@handler Delete
-	post /delete (IDRequest) returns (bool)
+	// @doc "删除用户"
+	// @handler Delete
+	// post /delete (IDRequest) returns (bool)
 
 	@doc "获取用户详情"
 	@handler Detail
-	post /detail returns (UserInfo)
+	post /detail (IDRequest) returns (UserInfoResponse)
+
+	@doc "修改用户状态"
+	@handler Status
+	post /status (StatusRequest) returns (bool)
+
+	@doc "修改用户密码"
+	@handler Password
+	post /password (IDRequest) returns (bool)
+
 }

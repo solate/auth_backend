@@ -10,9 +10,9 @@ import (
 )
 
 type Claims struct {
-	UserId   int     `json:"userId"`
-	Username string  `json:"username"`
-	RoleIds  []int64 `json:"roleIds"`
+	UserId  int     `json:"userId"`
+	Phone   string  `json:"phone"`
+	RoleIds []int64 `json:"roleIds"`
 	jwt.StandardClaims
 }
 
@@ -24,9 +24,9 @@ const (
 
 func GenerateToken(user *ent.User, roleIds []int64) (string, error) {
 	claims := Claims{
-		UserId:   user.ID,
-		Username: user.Username,
-		RoleIds:  roleIds,
+		UserId:  user.ID,
+		Phone:   user.Phone,
+		RoleIds: roleIds,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(UserLoginKeepAliveTime).Unix(),
 			IssuedAt:  time.Now().Unix(),

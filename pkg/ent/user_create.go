@@ -23,56 +23,36 @@ type UserCreate struct {
 	conflict []sql.ConflictOption
 }
 
-// SetUsername sets the "username" field.
-func (uc *UserCreate) SetUsername(s string) *UserCreate {
-	uc.mutation.SetUsername(s)
+// SetNo sets the "no" field.
+func (uc *UserCreate) SetNo(s string) *UserCreate {
+	uc.mutation.SetNo(s)
 	return uc
 }
 
-// SetPassword sets the "password" field.
-func (uc *UserCreate) SetPassword(s string) *UserCreate {
-	uc.mutation.SetPassword(s)
-	return uc
-}
-
-// SetNickname sets the "nickname" field.
-func (uc *UserCreate) SetNickname(s string) *UserCreate {
-	uc.mutation.SetNickname(s)
-	return uc
-}
-
-// SetNillableNickname sets the "nickname" field if the given value is not nil.
-func (uc *UserCreate) SetNillableNickname(s *string) *UserCreate {
+// SetNillableNo sets the "no" field if the given value is not nil.
+func (uc *UserCreate) SetNillableNo(s *string) *UserCreate {
 	if s != nil {
-		uc.SetNickname(*s)
+		uc.SetNo(*s)
 	}
 	return uc
 }
 
-// SetAvatar sets the "avatar" field.
-func (uc *UserCreate) SetAvatar(s string) *UserCreate {
-	uc.mutation.SetAvatar(s)
+// SetRole sets the "role" field.
+func (uc *UserCreate) SetRole(i int) *UserCreate {
+	uc.mutation.SetRole(i)
 	return uc
 }
 
-// SetNillableAvatar sets the "avatar" field if the given value is not nil.
-func (uc *UserCreate) SetNillableAvatar(s *string) *UserCreate {
+// SetName sets the "name" field.
+func (uc *UserCreate) SetName(s string) *UserCreate {
+	uc.mutation.SetName(s)
+	return uc
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (uc *UserCreate) SetNillableName(s *string) *UserCreate {
 	if s != nil {
-		uc.SetAvatar(*s)
-	}
-	return uc
-}
-
-// SetEmail sets the "email" field.
-func (uc *UserCreate) SetEmail(s string) *UserCreate {
-	uc.mutation.SetEmail(s)
-	return uc
-}
-
-// SetNillableEmail sets the "email" field if the given value is not nil.
-func (uc *UserCreate) SetNillableEmail(s *string) *UserCreate {
-	if s != nil {
-		uc.SetEmail(*s)
+		uc.SetName(*s)
 	}
 	return uc
 }
@@ -91,14 +71,124 @@ func (uc *UserCreate) SetNillablePhone(s *string) *UserCreate {
 	return uc
 }
 
+// SetEmail sets the "email" field.
+func (uc *UserCreate) SetEmail(s string) *UserCreate {
+	uc.mutation.SetEmail(s)
+	return uc
+}
+
+// SetNillableEmail sets the "email" field if the given value is not nil.
+func (uc *UserCreate) SetNillableEmail(s *string) *UserCreate {
+	if s != nil {
+		uc.SetEmail(*s)
+	}
+	return uc
+}
+
+// SetGender sets the "gender" field.
+func (uc *UserCreate) SetGender(i int) *UserCreate {
+	uc.mutation.SetGender(i)
+	return uc
+}
+
+// SetNillableGender sets the "gender" field if the given value is not nil.
+func (uc *UserCreate) SetNillableGender(i *int) *UserCreate {
+	if i != nil {
+		uc.SetGender(*i)
+	}
+	return uc
+}
+
+// SetPwdHashed sets the "pwd_hashed" field.
+func (uc *UserCreate) SetPwdHashed(s string) *UserCreate {
+	uc.mutation.SetPwdHashed(s)
+	return uc
+}
+
+// SetPwdSalt sets the "pwd_salt" field.
+func (uc *UserCreate) SetPwdSalt(s string) *UserCreate {
+	uc.mutation.SetPwdSalt(s)
+	return uc
+}
+
+// SetToken sets the "token" field.
+func (uc *UserCreate) SetToken(s string) *UserCreate {
+	uc.mutation.SetToken(s)
+	return uc
+}
+
+// SetNillableToken sets the "token" field if the given value is not nil.
+func (uc *UserCreate) SetNillableToken(s *string) *UserCreate {
+	if s != nil {
+		uc.SetToken(*s)
+	}
+	return uc
+}
+
+// SetDisableStatus sets the "disable_status" field.
+func (uc *UserCreate) SetDisableStatus(i int) *UserCreate {
+	uc.mutation.SetDisableStatus(i)
+	return uc
+}
+
+// SetNillableDisableStatus sets the "disable_status" field if the given value is not nil.
+func (uc *UserCreate) SetNillableDisableStatus(i *int) *UserCreate {
+	if i != nil {
+		uc.SetDisableStatus(*i)
+	}
+	return uc
+}
+
+// SetCompany sets the "company" field.
+func (uc *UserCreate) SetCompany(s string) *UserCreate {
+	uc.mutation.SetCompany(s)
+	return uc
+}
+
+// SetNillableCompany sets the "company" field if the given value is not nil.
+func (uc *UserCreate) SetNillableCompany(s *string) *UserCreate {
+	if s != nil {
+		uc.SetCompany(*s)
+	}
+	return uc
+}
+
+// SetParentDisableStatus sets the "parent_disable_status" field.
+func (uc *UserCreate) SetParentDisableStatus(i int) *UserCreate {
+	uc.mutation.SetParentDisableStatus(i)
+	return uc
+}
+
+// SetNillableParentDisableStatus sets the "parent_disable_status" field if the given value is not nil.
+func (uc *UserCreate) SetNillableParentDisableStatus(i *int) *UserCreate {
+	if i != nil {
+		uc.SetParentDisableStatus(*i)
+	}
+	return uc
+}
+
+// SetIcon sets the "icon" field.
+func (uc *UserCreate) SetIcon(s string) *UserCreate {
+	uc.mutation.SetIcon(s)
+	return uc
+}
+
+// SetNillableIcon sets the "icon" field if the given value is not nil.
+func (uc *UserCreate) SetNillableIcon(s *string) *UserCreate {
+	if s != nil {
+		uc.SetIcon(*s)
+	}
+	return uc
+}
+
 // SetStatus sets the "status" field.
-func (uc *UserCreate) SetStatus(i int8) *UserCreate {
+func (uc *UserCreate) SetStatus(i int) *UserCreate {
 	uc.mutation.SetStatus(i)
 	return uc
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (uc *UserCreate) SetNillableStatus(i *int8) *UserCreate {
+func (uc *UserCreate) SetNillableStatus(i *int) *UserCreate {
 	if i != nil {
 		uc.SetStatus(*i)
 	}
@@ -183,6 +273,46 @@ func (uc *UserCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (uc *UserCreate) defaults() {
+	if _, ok := uc.mutation.No(); !ok {
+		v := user.DefaultNo
+		uc.mutation.SetNo(v)
+	}
+	if _, ok := uc.mutation.Name(); !ok {
+		v := user.DefaultName
+		uc.mutation.SetName(v)
+	}
+	if _, ok := uc.mutation.Phone(); !ok {
+		v := user.DefaultPhone
+		uc.mutation.SetPhone(v)
+	}
+	if _, ok := uc.mutation.Email(); !ok {
+		v := user.DefaultEmail
+		uc.mutation.SetEmail(v)
+	}
+	if _, ok := uc.mutation.Gender(); !ok {
+		v := user.DefaultGender
+		uc.mutation.SetGender(v)
+	}
+	if _, ok := uc.mutation.Token(); !ok {
+		v := user.DefaultToken
+		uc.mutation.SetToken(v)
+	}
+	if _, ok := uc.mutation.DisableStatus(); !ok {
+		v := user.DefaultDisableStatus
+		uc.mutation.SetDisableStatus(v)
+	}
+	if _, ok := uc.mutation.Company(); !ok {
+		v := user.DefaultCompany
+		uc.mutation.SetCompany(v)
+	}
+	if _, ok := uc.mutation.ParentDisableStatus(); !ok {
+		v := user.DefaultParentDisableStatus
+		uc.mutation.SetParentDisableStatus(v)
+	}
+	if _, ok := uc.mutation.Icon(); !ok {
+		v := user.DefaultIcon
+		uc.mutation.SetIcon(v)
+	}
 	if _, ok := uc.mutation.Status(); !ok {
 		v := user.DefaultStatus
 		uc.mutation.SetStatus(v)
@@ -199,21 +329,69 @@ func (uc *UserCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (uc *UserCreate) check() error {
-	if _, ok := uc.mutation.Username(); !ok {
-		return &ValidationError{Name: "username", err: errors.New(`ent: missing required field "User.username"`)}
+	if _, ok := uc.mutation.No(); !ok {
+		return &ValidationError{Name: "no", err: errors.New(`ent: missing required field "User.no"`)}
 	}
-	if v, ok := uc.mutation.Username(); ok {
-		if err := user.UsernameValidator(v); err != nil {
-			return &ValidationError{Name: "username", err: fmt.Errorf(`ent: validator failed for field "User.username": %w`, err)}
+	if _, ok := uc.mutation.Role(); !ok {
+		return &ValidationError{Name: "role", err: errors.New(`ent: missing required field "User.role"`)}
+	}
+	if v, ok := uc.mutation.Role(); ok {
+		if err := user.RoleValidator(v); err != nil {
+			return &ValidationError{Name: "role", err: fmt.Errorf(`ent: validator failed for field "User.role": %w`, err)}
 		}
 	}
-	if _, ok := uc.mutation.Password(); !ok {
-		return &ValidationError{Name: "password", err: errors.New(`ent: missing required field "User.password"`)}
+	if _, ok := uc.mutation.Name(); !ok {
+		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "User.name"`)}
 	}
-	if v, ok := uc.mutation.Password(); ok {
-		if err := user.PasswordValidator(v); err != nil {
-			return &ValidationError{Name: "password", err: fmt.Errorf(`ent: validator failed for field "User.password": %w`, err)}
+	if v, ok := uc.mutation.Name(); ok {
+		if err := user.NameValidator(v); err != nil {
+			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "User.name": %w`, err)}
 		}
+	}
+	if _, ok := uc.mutation.Phone(); !ok {
+		return &ValidationError{Name: "phone", err: errors.New(`ent: missing required field "User.phone"`)}
+	}
+	if v, ok := uc.mutation.Phone(); ok {
+		if err := user.PhoneValidator(v); err != nil {
+			return &ValidationError{Name: "phone", err: fmt.Errorf(`ent: validator failed for field "User.phone": %w`, err)}
+		}
+	}
+	if _, ok := uc.mutation.Email(); !ok {
+		return &ValidationError{Name: "email", err: errors.New(`ent: missing required field "User.email"`)}
+	}
+	if _, ok := uc.mutation.Gender(); !ok {
+		return &ValidationError{Name: "gender", err: errors.New(`ent: missing required field "User.gender"`)}
+	}
+	if _, ok := uc.mutation.PwdHashed(); !ok {
+		return &ValidationError{Name: "pwd_hashed", err: errors.New(`ent: missing required field "User.pwd_hashed"`)}
+	}
+	if v, ok := uc.mutation.PwdHashed(); ok {
+		if err := user.PwdHashedValidator(v); err != nil {
+			return &ValidationError{Name: "pwd_hashed", err: fmt.Errorf(`ent: validator failed for field "User.pwd_hashed": %w`, err)}
+		}
+	}
+	if _, ok := uc.mutation.PwdSalt(); !ok {
+		return &ValidationError{Name: "pwd_salt", err: errors.New(`ent: missing required field "User.pwd_salt"`)}
+	}
+	if v, ok := uc.mutation.PwdSalt(); ok {
+		if err := user.PwdSaltValidator(v); err != nil {
+			return &ValidationError{Name: "pwd_salt", err: fmt.Errorf(`ent: validator failed for field "User.pwd_salt": %w`, err)}
+		}
+	}
+	if _, ok := uc.mutation.Token(); !ok {
+		return &ValidationError{Name: "token", err: errors.New(`ent: missing required field "User.token"`)}
+	}
+	if _, ok := uc.mutation.DisableStatus(); !ok {
+		return &ValidationError{Name: "disable_status", err: errors.New(`ent: missing required field "User.disable_status"`)}
+	}
+	if _, ok := uc.mutation.Company(); !ok {
+		return &ValidationError{Name: "company", err: errors.New(`ent: missing required field "User.company"`)}
+	}
+	if _, ok := uc.mutation.ParentDisableStatus(); !ok {
+		return &ValidationError{Name: "parent_disable_status", err: errors.New(`ent: missing required field "User.parent_disable_status"`)}
+	}
+	if _, ok := uc.mutation.Icon(); !ok {
+		return &ValidationError{Name: "icon", err: errors.New(`ent: missing required field "User.icon"`)}
 	}
 	if _, ok := uc.mutation.Status(); !ok {
 		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "User.status"`)}
@@ -251,32 +429,60 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec = sqlgraph.NewCreateSpec(user.Table, sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt))
 	)
 	_spec.OnConflict = uc.conflict
-	if value, ok := uc.mutation.Username(); ok {
-		_spec.SetField(user.FieldUsername, field.TypeString, value)
-		_node.Username = value
+	if value, ok := uc.mutation.No(); ok {
+		_spec.SetField(user.FieldNo, field.TypeString, value)
+		_node.No = value
 	}
-	if value, ok := uc.mutation.Password(); ok {
-		_spec.SetField(user.FieldPassword, field.TypeString, value)
-		_node.Password = value
+	if value, ok := uc.mutation.Role(); ok {
+		_spec.SetField(user.FieldRole, field.TypeInt, value)
+		_node.Role = value
 	}
-	if value, ok := uc.mutation.Nickname(); ok {
-		_spec.SetField(user.FieldNickname, field.TypeString, value)
-		_node.Nickname = value
-	}
-	if value, ok := uc.mutation.Avatar(); ok {
-		_spec.SetField(user.FieldAvatar, field.TypeString, value)
-		_node.Avatar = value
-	}
-	if value, ok := uc.mutation.Email(); ok {
-		_spec.SetField(user.FieldEmail, field.TypeString, value)
-		_node.Email = value
+	if value, ok := uc.mutation.Name(); ok {
+		_spec.SetField(user.FieldName, field.TypeString, value)
+		_node.Name = value
 	}
 	if value, ok := uc.mutation.Phone(); ok {
 		_spec.SetField(user.FieldPhone, field.TypeString, value)
 		_node.Phone = value
 	}
+	if value, ok := uc.mutation.Email(); ok {
+		_spec.SetField(user.FieldEmail, field.TypeString, value)
+		_node.Email = value
+	}
+	if value, ok := uc.mutation.Gender(); ok {
+		_spec.SetField(user.FieldGender, field.TypeInt, value)
+		_node.Gender = value
+	}
+	if value, ok := uc.mutation.PwdHashed(); ok {
+		_spec.SetField(user.FieldPwdHashed, field.TypeString, value)
+		_node.PwdHashed = value
+	}
+	if value, ok := uc.mutation.PwdSalt(); ok {
+		_spec.SetField(user.FieldPwdSalt, field.TypeString, value)
+		_node.PwdSalt = value
+	}
+	if value, ok := uc.mutation.Token(); ok {
+		_spec.SetField(user.FieldToken, field.TypeString, value)
+		_node.Token = value
+	}
+	if value, ok := uc.mutation.DisableStatus(); ok {
+		_spec.SetField(user.FieldDisableStatus, field.TypeInt, value)
+		_node.DisableStatus = value
+	}
+	if value, ok := uc.mutation.Company(); ok {
+		_spec.SetField(user.FieldCompany, field.TypeString, value)
+		_node.Company = value
+	}
+	if value, ok := uc.mutation.ParentDisableStatus(); ok {
+		_spec.SetField(user.FieldParentDisableStatus, field.TypeInt, value)
+		_node.ParentDisableStatus = value
+	}
+	if value, ok := uc.mutation.Icon(); ok {
+		_spec.SetField(user.FieldIcon, field.TypeString, value)
+		_node.Icon = value
+	}
 	if value, ok := uc.mutation.Status(); ok {
-		_spec.SetField(user.FieldStatus, field.TypeInt8, value)
+		_spec.SetField(user.FieldStatus, field.TypeInt, value)
 		_node.Status = value
 	}
 	if value, ok := uc.mutation.CreatedAt(); ok {
@@ -310,7 +516,7 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 // of the `INSERT` statement. For example:
 //
 //	client.User.Create().
-//		SetUsername(v).
+//		SetNo(v).
 //		OnConflict(
 //			// Update the row with the new values
 //			// the was proposed for insertion.
@@ -319,7 +525,7 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.UserUpsert) {
-//			SetUsername(v+v).
+//			SetNo(v+v).
 //		}).
 //		Exec(ctx)
 func (uc *UserCreate) OnConflict(opts ...sql.ConflictOption) *UserUpsertOne {
@@ -355,81 +561,45 @@ type (
 	}
 )
 
-// SetUsername sets the "username" field.
-func (u *UserUpsert) SetUsername(v string) *UserUpsert {
-	u.Set(user.FieldUsername, v)
+// SetNo sets the "no" field.
+func (u *UserUpsert) SetNo(v string) *UserUpsert {
+	u.Set(user.FieldNo, v)
 	return u
 }
 
-// UpdateUsername sets the "username" field to the value that was provided on create.
-func (u *UserUpsert) UpdateUsername() *UserUpsert {
-	u.SetExcluded(user.FieldUsername)
+// UpdateNo sets the "no" field to the value that was provided on create.
+func (u *UserUpsert) UpdateNo() *UserUpsert {
+	u.SetExcluded(user.FieldNo)
 	return u
 }
 
-// SetPassword sets the "password" field.
-func (u *UserUpsert) SetPassword(v string) *UserUpsert {
-	u.Set(user.FieldPassword, v)
+// SetRole sets the "role" field.
+func (u *UserUpsert) SetRole(v int) *UserUpsert {
+	u.Set(user.FieldRole, v)
 	return u
 }
 
-// UpdatePassword sets the "password" field to the value that was provided on create.
-func (u *UserUpsert) UpdatePassword() *UserUpsert {
-	u.SetExcluded(user.FieldPassword)
+// UpdateRole sets the "role" field to the value that was provided on create.
+func (u *UserUpsert) UpdateRole() *UserUpsert {
+	u.SetExcluded(user.FieldRole)
 	return u
 }
 
-// SetNickname sets the "nickname" field.
-func (u *UserUpsert) SetNickname(v string) *UserUpsert {
-	u.Set(user.FieldNickname, v)
+// AddRole adds v to the "role" field.
+func (u *UserUpsert) AddRole(v int) *UserUpsert {
+	u.Add(user.FieldRole, v)
 	return u
 }
 
-// UpdateNickname sets the "nickname" field to the value that was provided on create.
-func (u *UserUpsert) UpdateNickname() *UserUpsert {
-	u.SetExcluded(user.FieldNickname)
+// SetName sets the "name" field.
+func (u *UserUpsert) SetName(v string) *UserUpsert {
+	u.Set(user.FieldName, v)
 	return u
 }
 
-// ClearNickname clears the value of the "nickname" field.
-func (u *UserUpsert) ClearNickname() *UserUpsert {
-	u.SetNull(user.FieldNickname)
-	return u
-}
-
-// SetAvatar sets the "avatar" field.
-func (u *UserUpsert) SetAvatar(v string) *UserUpsert {
-	u.Set(user.FieldAvatar, v)
-	return u
-}
-
-// UpdateAvatar sets the "avatar" field to the value that was provided on create.
-func (u *UserUpsert) UpdateAvatar() *UserUpsert {
-	u.SetExcluded(user.FieldAvatar)
-	return u
-}
-
-// ClearAvatar clears the value of the "avatar" field.
-func (u *UserUpsert) ClearAvatar() *UserUpsert {
-	u.SetNull(user.FieldAvatar)
-	return u
-}
-
-// SetEmail sets the "email" field.
-func (u *UserUpsert) SetEmail(v string) *UserUpsert {
-	u.Set(user.FieldEmail, v)
-	return u
-}
-
-// UpdateEmail sets the "email" field to the value that was provided on create.
-func (u *UserUpsert) UpdateEmail() *UserUpsert {
-	u.SetExcluded(user.FieldEmail)
-	return u
-}
-
-// ClearEmail clears the value of the "email" field.
-func (u *UserUpsert) ClearEmail() *UserUpsert {
-	u.SetNull(user.FieldEmail)
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *UserUpsert) UpdateName() *UserUpsert {
+	u.SetExcluded(user.FieldName)
 	return u
 }
 
@@ -445,14 +615,134 @@ func (u *UserUpsert) UpdatePhone() *UserUpsert {
 	return u
 }
 
-// ClearPhone clears the value of the "phone" field.
-func (u *UserUpsert) ClearPhone() *UserUpsert {
-	u.SetNull(user.FieldPhone)
+// SetEmail sets the "email" field.
+func (u *UserUpsert) SetEmail(v string) *UserUpsert {
+	u.Set(user.FieldEmail, v)
+	return u
+}
+
+// UpdateEmail sets the "email" field to the value that was provided on create.
+func (u *UserUpsert) UpdateEmail() *UserUpsert {
+	u.SetExcluded(user.FieldEmail)
+	return u
+}
+
+// SetGender sets the "gender" field.
+func (u *UserUpsert) SetGender(v int) *UserUpsert {
+	u.Set(user.FieldGender, v)
+	return u
+}
+
+// UpdateGender sets the "gender" field to the value that was provided on create.
+func (u *UserUpsert) UpdateGender() *UserUpsert {
+	u.SetExcluded(user.FieldGender)
+	return u
+}
+
+// AddGender adds v to the "gender" field.
+func (u *UserUpsert) AddGender(v int) *UserUpsert {
+	u.Add(user.FieldGender, v)
+	return u
+}
+
+// SetPwdHashed sets the "pwd_hashed" field.
+func (u *UserUpsert) SetPwdHashed(v string) *UserUpsert {
+	u.Set(user.FieldPwdHashed, v)
+	return u
+}
+
+// UpdatePwdHashed sets the "pwd_hashed" field to the value that was provided on create.
+func (u *UserUpsert) UpdatePwdHashed() *UserUpsert {
+	u.SetExcluded(user.FieldPwdHashed)
+	return u
+}
+
+// SetPwdSalt sets the "pwd_salt" field.
+func (u *UserUpsert) SetPwdSalt(v string) *UserUpsert {
+	u.Set(user.FieldPwdSalt, v)
+	return u
+}
+
+// UpdatePwdSalt sets the "pwd_salt" field to the value that was provided on create.
+func (u *UserUpsert) UpdatePwdSalt() *UserUpsert {
+	u.SetExcluded(user.FieldPwdSalt)
+	return u
+}
+
+// SetToken sets the "token" field.
+func (u *UserUpsert) SetToken(v string) *UserUpsert {
+	u.Set(user.FieldToken, v)
+	return u
+}
+
+// UpdateToken sets the "token" field to the value that was provided on create.
+func (u *UserUpsert) UpdateToken() *UserUpsert {
+	u.SetExcluded(user.FieldToken)
+	return u
+}
+
+// SetDisableStatus sets the "disable_status" field.
+func (u *UserUpsert) SetDisableStatus(v int) *UserUpsert {
+	u.Set(user.FieldDisableStatus, v)
+	return u
+}
+
+// UpdateDisableStatus sets the "disable_status" field to the value that was provided on create.
+func (u *UserUpsert) UpdateDisableStatus() *UserUpsert {
+	u.SetExcluded(user.FieldDisableStatus)
+	return u
+}
+
+// AddDisableStatus adds v to the "disable_status" field.
+func (u *UserUpsert) AddDisableStatus(v int) *UserUpsert {
+	u.Add(user.FieldDisableStatus, v)
+	return u
+}
+
+// SetCompany sets the "company" field.
+func (u *UserUpsert) SetCompany(v string) *UserUpsert {
+	u.Set(user.FieldCompany, v)
+	return u
+}
+
+// UpdateCompany sets the "company" field to the value that was provided on create.
+func (u *UserUpsert) UpdateCompany() *UserUpsert {
+	u.SetExcluded(user.FieldCompany)
+	return u
+}
+
+// SetParentDisableStatus sets the "parent_disable_status" field.
+func (u *UserUpsert) SetParentDisableStatus(v int) *UserUpsert {
+	u.Set(user.FieldParentDisableStatus, v)
+	return u
+}
+
+// UpdateParentDisableStatus sets the "parent_disable_status" field to the value that was provided on create.
+func (u *UserUpsert) UpdateParentDisableStatus() *UserUpsert {
+	u.SetExcluded(user.FieldParentDisableStatus)
+	return u
+}
+
+// AddParentDisableStatus adds v to the "parent_disable_status" field.
+func (u *UserUpsert) AddParentDisableStatus(v int) *UserUpsert {
+	u.Add(user.FieldParentDisableStatus, v)
+	return u
+}
+
+// SetIcon sets the "icon" field.
+func (u *UserUpsert) SetIcon(v string) *UserUpsert {
+	u.Set(user.FieldIcon, v)
+	return u
+}
+
+// UpdateIcon sets the "icon" field to the value that was provided on create.
+func (u *UserUpsert) UpdateIcon() *UserUpsert {
+	u.SetExcluded(user.FieldIcon)
 	return u
 }
 
 // SetStatus sets the "status" field.
-func (u *UserUpsert) SetStatus(v int8) *UserUpsert {
+func (u *UserUpsert) SetStatus(v int) *UserUpsert {
 	u.Set(user.FieldStatus, v)
 	return u
 }
@@ -464,7 +754,7 @@ func (u *UserUpsert) UpdateStatus() *UserUpsert {
 }
 
 // AddStatus adds v to the "status" field.
-func (u *UserUpsert) AddStatus(v int8) *UserUpsert {
+func (u *UserUpsert) AddStatus(v int) *UserUpsert {
 	u.Add(user.FieldStatus, v)
 	return u
 }
@@ -533,94 +823,52 @@ func (u *UserUpsertOne) Update(set func(*UserUpsert)) *UserUpsertOne {
 	return u
 }
 
-// SetUsername sets the "username" field.
-func (u *UserUpsertOne) SetUsername(v string) *UserUpsertOne {
+// SetNo sets the "no" field.
+func (u *UserUpsertOne) SetNo(v string) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
-		s.SetUsername(v)
+		s.SetNo(v)
 	})
 }
 
-// UpdateUsername sets the "username" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdateUsername() *UserUpsertOne {
+// UpdateNo sets the "no" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateNo() *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
-		s.UpdateUsername()
+		s.UpdateNo()
 	})
 }
 
-// SetPassword sets the "password" field.
-func (u *UserUpsertOne) SetPassword(v string) *UserUpsertOne {
+// SetRole sets the "role" field.
+func (u *UserUpsertOne) SetRole(v int) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
-		s.SetPassword(v)
+		s.SetRole(v)
 	})
 }
 
-// UpdatePassword sets the "password" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdatePassword() *UserUpsertOne {
+// AddRole adds v to the "role" field.
+func (u *UserUpsertOne) AddRole(v int) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
-		s.UpdatePassword()
+		s.AddRole(v)
 	})
 }
 
-// SetNickname sets the "nickname" field.
-func (u *UserUpsertOne) SetNickname(v string) *UserUpsertOne {
+// UpdateRole sets the "role" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateRole() *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
-		s.SetNickname(v)
+		s.UpdateRole()
 	})
 }
 
-// UpdateNickname sets the "nickname" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdateNickname() *UserUpsertOne {
+// SetName sets the "name" field.
+func (u *UserUpsertOne) SetName(v string) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
-		s.UpdateNickname()
+		s.SetName(v)
 	})
 }
 
-// ClearNickname clears the value of the "nickname" field.
-func (u *UserUpsertOne) ClearNickname() *UserUpsertOne {
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateName() *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
-		s.ClearNickname()
-	})
-}
-
-// SetAvatar sets the "avatar" field.
-func (u *UserUpsertOne) SetAvatar(v string) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.SetAvatar(v)
-	})
-}
-
-// UpdateAvatar sets the "avatar" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdateAvatar() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateAvatar()
-	})
-}
-
-// ClearAvatar clears the value of the "avatar" field.
-func (u *UserUpsertOne) ClearAvatar() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearAvatar()
-	})
-}
-
-// SetEmail sets the "email" field.
-func (u *UserUpsertOne) SetEmail(v string) *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.SetEmail(v)
-	})
-}
-
-// UpdateEmail sets the "email" field to the value that was provided on create.
-func (u *UserUpsertOne) UpdateEmail() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateEmail()
-	})
-}
-
-// ClearEmail clears the value of the "email" field.
-func (u *UserUpsertOne) ClearEmail() *UserUpsertOne {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearEmail()
+		s.UpdateName()
 	})
 }
 
@@ -638,22 +886,162 @@ func (u *UserUpsertOne) UpdatePhone() *UserUpsertOne {
 	})
 }
 
-// ClearPhone clears the value of the "phone" field.
-func (u *UserUpsertOne) ClearPhone() *UserUpsertOne {
+// SetEmail sets the "email" field.
+func (u *UserUpsertOne) SetEmail(v string) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
-		s.ClearPhone()
+		s.SetEmail(v)
+	})
+}
+
+// UpdateEmail sets the "email" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateEmail() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateEmail()
+	})
+}
+
+// SetGender sets the "gender" field.
+func (u *UserUpsertOne) SetGender(v int) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetGender(v)
+	})
+}
+
+// AddGender adds v to the "gender" field.
+func (u *UserUpsertOne) AddGender(v int) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.AddGender(v)
+	})
+}
+
+// UpdateGender sets the "gender" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateGender() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateGender()
+	})
+}
+
+// SetPwdHashed sets the "pwd_hashed" field.
+func (u *UserUpsertOne) SetPwdHashed(v string) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetPwdHashed(v)
+	})
+}
+
+// UpdatePwdHashed sets the "pwd_hashed" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdatePwdHashed() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdatePwdHashed()
+	})
+}
+
+// SetPwdSalt sets the "pwd_salt" field.
+func (u *UserUpsertOne) SetPwdSalt(v string) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetPwdSalt(v)
+	})
+}
+
+// UpdatePwdSalt sets the "pwd_salt" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdatePwdSalt() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdatePwdSalt()
+	})
+}
+
+// SetToken sets the "token" field.
+func (u *UserUpsertOne) SetToken(v string) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetToken(v)
+	})
+}
+
+// UpdateToken sets the "token" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateToken() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateToken()
+	})
+}
+
+// SetDisableStatus sets the "disable_status" field.
+func (u *UserUpsertOne) SetDisableStatus(v int) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetDisableStatus(v)
+	})
+}
+
+// AddDisableStatus adds v to the "disable_status" field.
+func (u *UserUpsertOne) AddDisableStatus(v int) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.AddDisableStatus(v)
+	})
+}
+
+// UpdateDisableStatus sets the "disable_status" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateDisableStatus() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateDisableStatus()
+	})
+}
+
+// SetCompany sets the "company" field.
+func (u *UserUpsertOne) SetCompany(v string) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetCompany(v)
+	})
+}
+
+// UpdateCompany sets the "company" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateCompany() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateCompany()
+	})
+}
+
+// SetParentDisableStatus sets the "parent_disable_status" field.
+func (u *UserUpsertOne) SetParentDisableStatus(v int) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetParentDisableStatus(v)
+	})
+}
+
+// AddParentDisableStatus adds v to the "parent_disable_status" field.
+func (u *UserUpsertOne) AddParentDisableStatus(v int) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.AddParentDisableStatus(v)
+	})
+}
+
+// UpdateParentDisableStatus sets the "parent_disable_status" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateParentDisableStatus() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateParentDisableStatus()
+	})
+}
+
+// SetIcon sets the "icon" field.
+func (u *UserUpsertOne) SetIcon(v string) *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.SetIcon(v)
+	})
+}
+
+// UpdateIcon sets the "icon" field to the value that was provided on create.
+func (u *UserUpsertOne) UpdateIcon() *UserUpsertOne {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateIcon()
 	})
 }
 
 // SetStatus sets the "status" field.
-func (u *UserUpsertOne) SetStatus(v int8) *UserUpsertOne {
+func (u *UserUpsertOne) SetStatus(v int) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.SetStatus(v)
 	})
 }
 
 // AddStatus adds v to the "status" field.
-func (u *UserUpsertOne) AddStatus(v int8) *UserUpsertOne {
+func (u *UserUpsertOne) AddStatus(v int) *UserUpsertOne {
 	return u.Update(func(s *UserUpsert) {
 		s.AddStatus(v)
 	})
@@ -829,7 +1217,7 @@ func (ucb *UserCreateBulk) ExecX(ctx context.Context) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.UserUpsert) {
-//			SetUsername(v+v).
+//			SetNo(v+v).
 //		}).
 //		Exec(ctx)
 func (ucb *UserCreateBulk) OnConflict(opts ...sql.ConflictOption) *UserUpsertBulk {
@@ -898,94 +1286,52 @@ func (u *UserUpsertBulk) Update(set func(*UserUpsert)) *UserUpsertBulk {
 	return u
 }
 
-// SetUsername sets the "username" field.
-func (u *UserUpsertBulk) SetUsername(v string) *UserUpsertBulk {
+// SetNo sets the "no" field.
+func (u *UserUpsertBulk) SetNo(v string) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
-		s.SetUsername(v)
+		s.SetNo(v)
 	})
 }
 
-// UpdateUsername sets the "username" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdateUsername() *UserUpsertBulk {
+// UpdateNo sets the "no" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateNo() *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
-		s.UpdateUsername()
+		s.UpdateNo()
 	})
 }
 
-// SetPassword sets the "password" field.
-func (u *UserUpsertBulk) SetPassword(v string) *UserUpsertBulk {
+// SetRole sets the "role" field.
+func (u *UserUpsertBulk) SetRole(v int) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
-		s.SetPassword(v)
+		s.SetRole(v)
 	})
 }
 
-// UpdatePassword sets the "password" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdatePassword() *UserUpsertBulk {
+// AddRole adds v to the "role" field.
+func (u *UserUpsertBulk) AddRole(v int) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
-		s.UpdatePassword()
+		s.AddRole(v)
 	})
 }
 
-// SetNickname sets the "nickname" field.
-func (u *UserUpsertBulk) SetNickname(v string) *UserUpsertBulk {
+// UpdateRole sets the "role" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateRole() *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
-		s.SetNickname(v)
+		s.UpdateRole()
 	})
 }
 
-// UpdateNickname sets the "nickname" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdateNickname() *UserUpsertBulk {
+// SetName sets the "name" field.
+func (u *UserUpsertBulk) SetName(v string) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
-		s.UpdateNickname()
+		s.SetName(v)
 	})
 }
 
-// ClearNickname clears the value of the "nickname" field.
-func (u *UserUpsertBulk) ClearNickname() *UserUpsertBulk {
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateName() *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
-		s.ClearNickname()
-	})
-}
-
-// SetAvatar sets the "avatar" field.
-func (u *UserUpsertBulk) SetAvatar(v string) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.SetAvatar(v)
-	})
-}
-
-// UpdateAvatar sets the "avatar" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdateAvatar() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateAvatar()
-	})
-}
-
-// ClearAvatar clears the value of the "avatar" field.
-func (u *UserUpsertBulk) ClearAvatar() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearAvatar()
-	})
-}
-
-// SetEmail sets the "email" field.
-func (u *UserUpsertBulk) SetEmail(v string) *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.SetEmail(v)
-	})
-}
-
-// UpdateEmail sets the "email" field to the value that was provided on create.
-func (u *UserUpsertBulk) UpdateEmail() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.UpdateEmail()
-	})
-}
-
-// ClearEmail clears the value of the "email" field.
-func (u *UserUpsertBulk) ClearEmail() *UserUpsertBulk {
-	return u.Update(func(s *UserUpsert) {
-		s.ClearEmail()
+		s.UpdateName()
 	})
 }
 
@@ -1003,22 +1349,162 @@ func (u *UserUpsertBulk) UpdatePhone() *UserUpsertBulk {
 	})
 }
 
-// ClearPhone clears the value of the "phone" field.
-func (u *UserUpsertBulk) ClearPhone() *UserUpsertBulk {
+// SetEmail sets the "email" field.
+func (u *UserUpsertBulk) SetEmail(v string) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
-		s.ClearPhone()
+		s.SetEmail(v)
+	})
+}
+
+// UpdateEmail sets the "email" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateEmail() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateEmail()
+	})
+}
+
+// SetGender sets the "gender" field.
+func (u *UserUpsertBulk) SetGender(v int) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetGender(v)
+	})
+}
+
+// AddGender adds v to the "gender" field.
+func (u *UserUpsertBulk) AddGender(v int) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.AddGender(v)
+	})
+}
+
+// UpdateGender sets the "gender" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateGender() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateGender()
+	})
+}
+
+// SetPwdHashed sets the "pwd_hashed" field.
+func (u *UserUpsertBulk) SetPwdHashed(v string) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetPwdHashed(v)
+	})
+}
+
+// UpdatePwdHashed sets the "pwd_hashed" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdatePwdHashed() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdatePwdHashed()
+	})
+}
+
+// SetPwdSalt sets the "pwd_salt" field.
+func (u *UserUpsertBulk) SetPwdSalt(v string) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetPwdSalt(v)
+	})
+}
+
+// UpdatePwdSalt sets the "pwd_salt" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdatePwdSalt() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdatePwdSalt()
+	})
+}
+
+// SetToken sets the "token" field.
+func (u *UserUpsertBulk) SetToken(v string) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetToken(v)
+	})
+}
+
+// UpdateToken sets the "token" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateToken() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateToken()
+	})
+}
+
+// SetDisableStatus sets the "disable_status" field.
+func (u *UserUpsertBulk) SetDisableStatus(v int) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetDisableStatus(v)
+	})
+}
+
+// AddDisableStatus adds v to the "disable_status" field.
+func (u *UserUpsertBulk) AddDisableStatus(v int) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.AddDisableStatus(v)
+	})
+}
+
+// UpdateDisableStatus sets the "disable_status" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateDisableStatus() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateDisableStatus()
+	})
+}
+
+// SetCompany sets the "company" field.
+func (u *UserUpsertBulk) SetCompany(v string) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetCompany(v)
+	})
+}
+
+// UpdateCompany sets the "company" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateCompany() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateCompany()
+	})
+}
+
+// SetParentDisableStatus sets the "parent_disable_status" field.
+func (u *UserUpsertBulk) SetParentDisableStatus(v int) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetParentDisableStatus(v)
+	})
+}
+
+// AddParentDisableStatus adds v to the "parent_disable_status" field.
+func (u *UserUpsertBulk) AddParentDisableStatus(v int) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.AddParentDisableStatus(v)
+	})
+}
+
+// UpdateParentDisableStatus sets the "parent_disable_status" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateParentDisableStatus() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateParentDisableStatus()
+	})
+}
+
+// SetIcon sets the "icon" field.
+func (u *UserUpsertBulk) SetIcon(v string) *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.SetIcon(v)
+	})
+}
+
+// UpdateIcon sets the "icon" field to the value that was provided on create.
+func (u *UserUpsertBulk) UpdateIcon() *UserUpsertBulk {
+	return u.Update(func(s *UserUpsert) {
+		s.UpdateIcon()
 	})
 }
 
 // SetStatus sets the "status" field.
-func (u *UserUpsertBulk) SetStatus(v int8) *UserUpsertBulk {
+func (u *UserUpsertBulk) SetStatus(v int) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.SetStatus(v)
 	})
 }
 
 // AddStatus adds v to the "status" field.
-func (u *UserUpsertBulk) AddStatus(v int8) *UserUpsertBulk {
+func (u *UserUpsertBulk) AddStatus(v int) *UserUpsertBulk {
 	return u.Update(func(s *UserUpsert) {
 		s.AddStatus(v)
 	})

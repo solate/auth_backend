@@ -67,7 +67,7 @@ func (m *AuthMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 
 		// 5. 将用户信息存入context
 		ctx := context.WithValue(r.Context(), "userId", claims.UserId)
-		ctx = context.WithValue(ctx, "username", claims.Username)
+		ctx = context.WithValue(ctx, "phone", claims.Phone)
 		ctx = context.WithValue(ctx, "roleIds", claims.RoleIds)
 		ctx = context.WithValue(ctx, "permissions", permissions)
 

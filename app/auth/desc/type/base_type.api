@@ -28,3 +28,8 @@ type (
 type IDRequest {
 	ID int `json:"id"` // ID
 }
+
+type StatusRequest {
+	ID     int `json:"id"`     // ID
+	Status int `json:"status"` // 状态
+}

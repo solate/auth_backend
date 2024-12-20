@@ -27,13 +27,20 @@ func (User) Annotations() []schema.Annotation {
 // Fields of the User.
 func (User) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("username").Unique().NotEmpty().Comment("用户名"),
-		field.String("password").Sensitive().NotEmpty().Comment("密码"),
-		field.String("nickname").Optional().Comment("昵称"),
-		field.String("avatar").Optional().Comment("头像"),
-		field.String("email").Optional().Comment("邮箱"),
-		field.String("phone").Unique().Optional().Comment("手机号"),
-		field.Int8("status").Default(1).Comment("状态: 1:启用, 2:禁用"),
+		field.String("no").Default("").Comment("编号"),
+		field.Int("role").Range(1, 3).Comment("角色，1：超级管理员 2：代理商 3：商户 --  废弃"),
+		field.String("name").NotEmpty().Default("").Comment("真实姓名"),
+		field.String("phone").NotEmpty().Default("").Comment("电话"),
+		field.String("email").Default("").Comment("邮箱"),
+		field.Int("gender").Default(0).Comment("性别，1：男 2：女"),
+		field.String("pwd_hashed").NotEmpty().Comment("hash后的密码"),
+		field.String("pwd_salt").NotEmpty().Comment("密码加盐"),
+		field.String("token").Default("").Comment("登录后的token信息"),
+		field.Int("disable_status").Default(0).Comment("禁用状态，0：正常 1：禁用"),
+		field.String("company").Default("").Comment("所属企业"),
+		field.Int("parent_disable_status").Default(0).Comment("上级禁用状态，0：正常 1：禁用"),
+		field.String("icon").Default("").Comment("用户头像"),
+		field.Int("status").Default(1).Comment("状态: 1:启用, 2:禁用"),
 		field.Time("created_at").Default(time.Now).Comment("创建时间"),
 		field.Time("updated_at").Default(time.Now).UpdateDefault(time.Now).Comment("更新时间"),
 	}
@@ -48,7 +55,6 @@ func (User) Edges() []ent.Edge {
 
 func (User) Indexes() []ent.Index {
 	return []ent.Index{
-		index.Fields("username"),
 		index.Fields("phone"),
 	}
 }

@@ -13,13 +13,14 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/redis"
+	"github.com/zeromicro/go-zero/rest"
 )
 
 type ServiceContext struct {
 	Config          config.Config
 	Orm             *ent.Client
 	Redis           *redis.Redis
-	AuthMiddleware  *middleware.AuthMiddleware
+	AuthMiddleware  rest.Middleware
 	PermissionCache *cache.PermissionCache
 }
 
@@ -32,7 +33,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		Config:          c,
 		Orm:             client,
 		Redis:           initRedis(c),
-		AuthMiddleware:  middleware.NewAuthMiddleware(c, client),
+		AuthMiddleware:  middleware.NewAuthMiddleware(c, client).Handle,
 		PermissionCache: cache.NewPermissionCache(rdb),
 	}
 }

@@ -19,7 +19,7 @@ var (
 		{Name: "action", Type: field.TypeInt, Nullable: true, Comment: "操作类型: 1:all 2:read 3:write", Default: 1},
 		{Name: "parent_id", Type: field.TypeInt, Nullable: true, Comment: "父级ID"},
 		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "描述"},
-		{Name: "status", Type: field.TypeInt8, Comment: "状态 1:启用 2:禁用", Default: 1},
+		{Name: "status", Type: field.TypeInt, Comment: "状态 1:启用 2:禁用", Default: 1},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 	}
@@ -36,7 +36,7 @@ var (
 		{Name: "name", Type: field.TypeString, Comment: "角色名"},
 		{Name: "code", Type: field.TypeString, Unique: true, Comment: "角色编码"},
 		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "角色描述"},
-		{Name: "status", Type: field.TypeInt8, Comment: "状态: 1:启用, 2:禁用", Default: 1},
+		{Name: "status", Type: field.TypeInt, Comment: "状态: 1:启用, 2:禁用", Default: 1},
 		{Name: "created_at", Type: field.TypeTime, Comment: "创建时间"},
 		{Name: "updated_at", Type: field.TypeTime, Comment: "更新时间"},
 	}
@@ -57,13 +57,20 @@ var (
 	// UsersColumns holds the columns for the "users" table.
 	UsersColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "username", Type: field.TypeString, Unique: true, Comment: "用户名"},
-		{Name: "password", Type: field.TypeString, Comment: "密码"},
-		{Name: "nickname", Type: field.TypeString, Nullable: true, Comment: "昵称"},
-		{Name: "avatar", Type: field.TypeString, Nullable: true, Comment: "头像"},
-		{Name: "email", Type: field.TypeString, Nullable: true, Comment: "邮箱"},
-		{Name: "phone", Type: field.TypeString, Unique: true, Nullable: true, Comment: "手机号"},
-		{Name: "status", Type: field.TypeInt8, Comment: "状态: 1:启用, 2:禁用", Default: 1},
+		{Name: "no", Type: field.TypeString, Comment: "编号", Default: ""},
+		{Name: "role", Type: field.TypeInt, Comment: "角色，1：超级管理员 2：代理商 3：商户 --  废弃"},
+		{Name: "name", Type: field.TypeString, Comment: "真实姓名", Default: ""},
+		{Name: "phone", Type: field.TypeString, Comment: "电话", Default: ""},
+		{Name: "email", Type: field.TypeString, Comment: "邮箱", Default: ""},
+		{Name: "gender", Type: field.TypeInt, Comment: "性别，1：男 2：女", Default: 0},
+		{Name: "pwd_hashed", Type: field.TypeString, Comment: "hash后的密码"},
+		{Name: "pwd_salt", Type: field.TypeString, Comment: "密码加盐"},
+		{Name: "token", Type: field.TypeString, Comment: "登录后的token信息", Default: ""},
+		{Name: "disable_status", Type: field.TypeInt, Comment: "禁用状态，0：正常 1：禁用", Default: 0},
+		{Name: "company", Type: field.TypeString, Comment: "所属企业", Default: ""},
+		{Name: "parent_disable_status", Type: field.TypeInt, Comment: "上级禁用状态，0：正常 1：禁用", Default: 0},
+		{Name: "icon", Type: field.TypeString, Comment: "用户头像", Default: ""},
+		{Name: "status", Type: field.TypeInt, Comment: "状态: 1:启用, 2:禁用", Default: 1},
 		{Name: "created_at", Type: field.TypeTime, Comment: "创建时间"},
 		{Name: "updated_at", Type: field.TypeTime, Comment: "更新时间"},
 	}
@@ -75,14 +82,9 @@ var (
 		PrimaryKey: []*schema.Column{UsersColumns[0]},
 		Indexes: []*schema.Index{
 			{
-				Name:    "user_username",
-				Unique:  false,
-				Columns: []*schema.Column{UsersColumns[1]},
-			},
-			{
 				Name:    "user_phone",
 				Unique:  false,
-				Columns: []*schema.Column{UsersColumns[6]},
+				Columns: []*schema.Column{UsersColumns[4]},
 			},
 		},
 	}

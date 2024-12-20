@@ -30,7 +30,7 @@ func (Role) Fields() []ent.Field {
 		field.String("name").NotEmpty().Comment("角色名"),
 		field.String("code").NotEmpty().Unique().Comment("角色编码"),
 		field.String("description").Optional().Comment("角色描述"),
-		field.Int8("status").Default(1).Comment("状态: 1:启用, 2:禁用"),
+		field.Int("status").Default(1).Comment("状态: 1:启用, 2:禁用"),
 		field.Time("created_at").Default(time.Now).Comment("创建时间"),
 		field.Time("updated_at").Default(time.Now).UpdateDefault(time.Now).Comment("更新时间"),
 	}

@@ -14,18 +14,32 @@ const (
 	Label = "user"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldUsername holds the string denoting the username field in the database.
-	FieldUsername = "username"
-	// FieldPassword holds the string denoting the password field in the database.
-	FieldPassword = "password"
-	// FieldNickname holds the string denoting the nickname field in the database.
-	FieldNickname = "nickname"
-	// FieldAvatar holds the string denoting the avatar field in the database.
-	FieldAvatar = "avatar"
-	// FieldEmail holds the string denoting the email field in the database.
-	FieldEmail = "email"
+	// FieldNo holds the string denoting the no field in the database.
+	FieldNo = "no"
+	// FieldRole holds the string denoting the role field in the database.
+	FieldRole = "role"
+	// FieldName holds the string denoting the name field in the database.
+	FieldName = "name"
 	// FieldPhone holds the string denoting the phone field in the database.
 	FieldPhone = "phone"
+	// FieldEmail holds the string denoting the email field in the database.
+	FieldEmail = "email"
+	// FieldGender holds the string denoting the gender field in the database.
+	FieldGender = "gender"
+	// FieldPwdHashed holds the string denoting the pwd_hashed field in the database.
+	FieldPwdHashed = "pwd_hashed"
+	// FieldPwdSalt holds the string denoting the pwd_salt field in the database.
+	FieldPwdSalt = "pwd_salt"
+	// FieldToken holds the string denoting the token field in the database.
+	FieldToken = "token"
+	// FieldDisableStatus holds the string denoting the disable_status field in the database.
+	FieldDisableStatus = "disable_status"
+	// FieldCompany holds the string denoting the company field in the database.
+	FieldCompany = "company"
+	// FieldParentDisableStatus holds the string denoting the parent_disable_status field in the database.
+	FieldParentDisableStatus = "parent_disable_status"
+	// FieldIcon holds the string denoting the icon field in the database.
+	FieldIcon = "icon"
 	// FieldStatus holds the string denoting the status field in the database.
 	FieldStatus = "status"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
@@ -46,12 +60,19 @@ const (
 // Columns holds all SQL columns for user fields.
 var Columns = []string{
 	FieldID,
-	FieldUsername,
-	FieldPassword,
-	FieldNickname,
-	FieldAvatar,
-	FieldEmail,
+	FieldNo,
+	FieldRole,
+	FieldName,
 	FieldPhone,
+	FieldEmail,
+	FieldGender,
+	FieldPwdHashed,
+	FieldPwdSalt,
+	FieldToken,
+	FieldDisableStatus,
+	FieldCompany,
+	FieldParentDisableStatus,
+	FieldIcon,
 	FieldStatus,
 	FieldCreatedAt,
 	FieldUpdatedAt,
@@ -74,12 +95,38 @@ func ValidColumn(column string) bool {
 }
 
 var (
-	// UsernameValidator is a validator for the "username" field. It is called by the builders before save.
-	UsernameValidator func(string) error
-	// PasswordValidator is a validator for the "password" field. It is called by the builders before save.
-	PasswordValidator func(string) error
+	// DefaultNo holds the default value on creation for the "no" field.
+	DefaultNo string
+	// RoleValidator is a validator for the "role" field. It is called by the builders before save.
+	RoleValidator func(int) error
+	// DefaultName holds the default value on creation for the "name" field.
+	DefaultName string
+	// NameValidator is a validator for the "name" field. It is called by the builders before save.
+	NameValidator func(string) error
+	// DefaultPhone holds the default value on creation for the "phone" field.
+	DefaultPhone string
+	// PhoneValidator is a validator for the "phone" field. It is called by the builders before save.
+	PhoneValidator func(string) error
+	// DefaultEmail holds the default value on creation for the "email" field.
+	DefaultEmail string
+	// DefaultGender holds the default value on creation for the "gender" field.
+	DefaultGender int
+	// PwdHashedValidator is a validator for the "pwd_hashed" field. It is called by the builders before save.
+	PwdHashedValidator func(string) error
+	// PwdSaltValidator is a validator for the "pwd_salt" field. It is called by the builders before save.
+	PwdSaltValidator func(string) error
+	// DefaultToken holds the default value on creation for the "token" field.
+	DefaultToken string
+	// DefaultDisableStatus holds the default value on creation for the "disable_status" field.
+	DefaultDisableStatus int
+	// DefaultCompany holds the default value on creation for the "company" field.
+	DefaultCompany string
+	// DefaultParentDisableStatus holds the default value on creation for the "parent_disable_status" field.
+	DefaultParentDisableStatus int
+	// DefaultIcon holds the default value on creation for the "icon" field.
+	DefaultIcon string
 	// DefaultStatus holds the default value on creation for the "status" field.
-	DefaultStatus int8
+	DefaultStatus int
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
@@ -96,24 +143,24 @@ func ByID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldID, opts...).ToFunc()
 }
 
-// ByUsername orders the results by the username field.
-func ByUsername(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldUsername, opts...).ToFunc()
+// ByNo orders the results by the no field.
+func ByNo(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldNo, opts...).ToFunc()
 }
 
-// ByPassword orders the results by the password field.
-func ByPassword(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldPassword, opts...).ToFunc()
+// ByRole orders the results by the role field.
+func ByRole(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRole, opts...).ToFunc()
 }
 
-// ByNickname orders the results by the nickname field.
-func ByNickname(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldNickname, opts...).ToFunc()
+// ByName orders the results by the name field.
+func ByName(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldName, opts...).ToFunc()
 }
 
-// ByAvatar orders the results by the avatar field.
-func ByAvatar(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldAvatar, opts...).ToFunc()
+// ByPhone orders the results by the phone field.
+func ByPhone(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldPhone, opts...).ToFunc()
 }
 
 // ByEmail orders the results by the email field.
@@ -121,9 +168,44 @@ func ByEmail(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldEmail, opts...).ToFunc()
 }
 
-// ByPhone orders the results by the phone field.
-func ByPhone(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldPhone, opts...).ToFunc()
+// ByGender orders the results by the gender field.
+func ByGender(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldGender, opts...).ToFunc()
+}
+
+// ByPwdHashed orders the results by the pwd_hashed field.
+func ByPwdHashed(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldPwdHashed, opts...).ToFunc()
+}
+
+// ByPwdSalt orders the results by the pwd_salt field.
+func ByPwdSalt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldPwdSalt, opts...).ToFunc()
+}
+
+// ByToken orders the results by the token field.
+func ByToken(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldToken, opts...).ToFunc()
+}
+
+// ByDisableStatus orders the results by the disable_status field.
+func ByDisableStatus(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDisableStatus, opts...).ToFunc()
+}
+
+// ByCompany orders the results by the company field.
+func ByCompany(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCompany, opts...).ToFunc()
+}
+
+// ByParentDisableStatus orders the results by the parent_disable_status field.
+func ByParentDisableStatus(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldParentDisableStatus, opts...).ToFunc()
+}
+
+// ByIcon orders the results by the icon field.
+func ByIcon(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldIcon, opts...).ToFunc()
 }
 
 // ByStatus orders the results by the status field.

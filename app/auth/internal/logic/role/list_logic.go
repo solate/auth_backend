@@ -25,7 +25,52 @@ func NewListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListLogic {
 }
 
 func (l *ListLogic) List(req *types.RoleListReq) (resp *types.RoleListResp, err error) {
-	// todo: add your logic here and delete this line
+	// // 1. 构建查询条件
+	// query := l.svcCtx.DB.Role.Query()
+	// if req.Name != "" {
+	// 	query = query.Where(role.NameContains(req.Name))
+	// }
+	// if req.Status > 0 {
+	// 	query = query.Where(role.Status(req.Status))
+	// }
 
-	return
+	// // 2. 获取总数
+	// total, err := query.Count(l.ctx)
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	// // 3. 分页查询
+	// roles, err := query.
+	// 	Limit(int(req.PageSize)).
+	// 	Offset(int((req.Page - 1) * req.PageSize)).
+	// 	Order(ent.Desc(role.FieldCreatedAt)).
+	// 	WithPermissions().
+	// 	All(l.ctx)
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	// // 4. 构建返回数据
+	// list := make([]*types.RoleInfo, 0)
+	// for _, r := range roles {
+	// 	permissions := make([]int64, 0)
+	// 	for _, p := range r.Edges.Permissions {
+	// 		permissions = append(permissions, p.ID)
+	// 	}
+	// 	list = append(list, &types.RoleInfo{
+	// 		ID:          r.ID,
+	// 		Name:        r.Name,
+	// 		Description: r.Description,
+	// 		Status:      r.Status,
+	// 		Permissions: permissions,
+	// 	})
+	// }
+
+	// return &types.RoleListResp{
+	// 	Total: total,
+	// 	List:  list,
+	// }, nil
+
+	return nil, nil
 }

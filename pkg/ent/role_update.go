@@ -80,14 +80,14 @@ func (ru *RoleUpdate) ClearDescription() *RoleUpdate {
 }
 
 // SetStatus sets the "status" field.
-func (ru *RoleUpdate) SetStatus(i int8) *RoleUpdate {
+func (ru *RoleUpdate) SetStatus(i int) *RoleUpdate {
 	ru.mutation.ResetStatus()
 	ru.mutation.SetStatus(i)
 	return ru
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (ru *RoleUpdate) SetNillableStatus(i *int8) *RoleUpdate {
+func (ru *RoleUpdate) SetNillableStatus(i *int) *RoleUpdate {
 	if i != nil {
 		ru.SetStatus(*i)
 	}
@@ -95,7 +95,7 @@ func (ru *RoleUpdate) SetNillableStatus(i *int8) *RoleUpdate {
 }
 
 // AddStatus adds i to the "status" field.
-func (ru *RoleUpdate) AddStatus(i int8) *RoleUpdate {
+func (ru *RoleUpdate) AddStatus(i int) *RoleUpdate {
 	ru.mutation.AddStatus(i)
 	return ru
 }
@@ -279,10 +279,10 @@ func (ru *RoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.ClearField(role.FieldDescription, field.TypeString)
 	}
 	if value, ok := ru.mutation.Status(); ok {
-		_spec.SetField(role.FieldStatus, field.TypeInt8, value)
+		_spec.SetField(role.FieldStatus, field.TypeInt, value)
 	}
 	if value, ok := ru.mutation.AddedStatus(); ok {
-		_spec.AddField(role.FieldStatus, field.TypeInt8, value)
+		_spec.AddField(role.FieldStatus, field.TypeInt, value)
 	}
 	if value, ok := ru.mutation.CreatedAt(); ok {
 		_spec.SetField(role.FieldCreatedAt, field.TypeTime, value)
@@ -451,14 +451,14 @@ func (ruo *RoleUpdateOne) ClearDescription() *RoleUpdateOne {
 }
 
 // SetStatus sets the "status" field.
-func (ruo *RoleUpdateOne) SetStatus(i int8) *RoleUpdateOne {
+func (ruo *RoleUpdateOne) SetStatus(i int) *RoleUpdateOne {
 	ruo.mutation.ResetStatus()
 	ruo.mutation.SetStatus(i)
 	return ruo
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (ruo *RoleUpdateOne) SetNillableStatus(i *int8) *RoleUpdateOne {
+func (ruo *RoleUpdateOne) SetNillableStatus(i *int) *RoleUpdateOne {
 	if i != nil {
 		ruo.SetStatus(*i)
 	}
@@ -466,7 +466,7 @@ func (ruo *RoleUpdateOne) SetNillableStatus(i *int8) *RoleUpdateOne {
 }
 
 // AddStatus adds i to the "status" field.
-func (ruo *RoleUpdateOne) AddStatus(i int8) *RoleUpdateOne {
+func (ruo *RoleUpdateOne) AddStatus(i int) *RoleUpdateOne {
 	ruo.mutation.AddStatus(i)
 	return ruo
 }
@@ -680,10 +680,10 @@ func (ruo *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) 
 		_spec.ClearField(role.FieldDescription, field.TypeString)
 	}
 	if value, ok := ruo.mutation.Status(); ok {
-		_spec.SetField(role.FieldStatus, field.TypeInt8, value)
+		_spec.SetField(role.FieldStatus, field.TypeInt, value)
 	}
 	if value, ok := ruo.mutation.AddedStatus(); ok {
-		_spec.AddField(role.FieldStatus, field.TypeInt8, value)
+		_spec.AddField(role.FieldStatus, field.TypeInt, value)
 	}
 	if value, ok := ruo.mutation.CreatedAt(); ok {
 		_spec.SetField(role.FieldCreatedAt, field.TypeTime, value)

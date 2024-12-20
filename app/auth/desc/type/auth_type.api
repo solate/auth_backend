@@ -1,5 +1,7 @@
 syntax = "v1"
 
+import "user_type.api"
+
 info(
 	title: "认证服务接口"
 	desc: "包含登录、注册、token刷新等功能"
@@ -9,8 +11,8 @@ info(
 
 type (
 	LoginReq {
-		Username string `json:"username" validate:"required"`
-		Password string `json:"password" validate:"required"`
+		Phone string `json:"phone"` // 电话
+		Pwd   string `json:"pwd"`   // 密码
 	}
 
 	LoginResp {
@@ -22,17 +24,6 @@ type (
 
 	RefreshTokenReq {
 		RefreshToken string `json:"refreshToken" validate:"required"`
-	}
-
-	UserInfoResp {
-		Id          int64    `json:"id"`
-		Username    string   `json:"username"`
-		Nickname    string   `json:"nickname"`
-		Avatar      string   `json:"avatar"`
-		Email       string   `json:"email"`
-		Phone       string   `json:"phone"`
-		Roles       []string `json:"roles"`
-		Permissions []string `json:"permissions"`
 	}
 )
 
@@ -51,7 +42,7 @@ service auth-api {
 
 	@doc "获取当前用户信息"
 	@handler userInfo
-	post /user_info returns (UserInfoResp)
+	post /user_info returns (UserInfoResponse)
 
 	@doc "退出登录"
 	@handler logout

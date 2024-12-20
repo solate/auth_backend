@@ -91,7 +91,7 @@ func Description(v string) predicate.Permission {
 }
 
 // Status applies equality check predicate on the "status" field. It's identical to StatusEQ.
-func Status(v int8) predicate.Permission {
+func Status(v int) predicate.Permission {
 	return predicate.Permission(sql.FieldEQ(FieldStatus, v))
 }
 
@@ -526,42 +526,42 @@ func DescriptionContainsFold(v string) predicate.Permission {
 }
 
 // StatusEQ applies the EQ predicate on the "status" field.
-func StatusEQ(v int8) predicate.Permission {
+func StatusEQ(v int) predicate.Permission {
 	return predicate.Permission(sql.FieldEQ(FieldStatus, v))
 }
 
 // StatusNEQ applies the NEQ predicate on the "status" field.
-func StatusNEQ(v int8) predicate.Permission {
+func StatusNEQ(v int) predicate.Permission {
 	return predicate.Permission(sql.FieldNEQ(FieldStatus, v))
 }
 
 // StatusIn applies the In predicate on the "status" field.
-func StatusIn(vs ...int8) predicate.Permission {
+func StatusIn(vs ...int) predicate.Permission {
 	return predicate.Permission(sql.FieldIn(FieldStatus, vs...))
 }
 
 // StatusNotIn applies the NotIn predicate on the "status" field.
-func StatusNotIn(vs ...int8) predicate.Permission {
+func StatusNotIn(vs ...int) predicate.Permission {
 	return predicate.Permission(sql.FieldNotIn(FieldStatus, vs...))
 }
 
 // StatusGT applies the GT predicate on the "status" field.
-func StatusGT(v int8) predicate.Permission {
+func StatusGT(v int) predicate.Permission {
 	return predicate.Permission(sql.FieldGT(FieldStatus, v))
 }
 
 // StatusGTE applies the GTE predicate on the "status" field.
-func StatusGTE(v int8) predicate.Permission {
+func StatusGTE(v int) predicate.Permission {
 	return predicate.Permission(sql.FieldGTE(FieldStatus, v))
 }
 
 // StatusLT applies the LT predicate on the "status" field.
-func StatusLT(v int8) predicate.Permission {
+func StatusLT(v int) predicate.Permission {
 	return predicate.Permission(sql.FieldLT(FieldStatus, v))
 }
 
 // StatusLTE applies the LTE predicate on the "status" field.
-func StatusLTE(v int8) predicate.Permission {
+func StatusLTE(v int) predicate.Permission {
 	return predicate.Permission(sql.FieldLTE(FieldStatus, v))
 }
 

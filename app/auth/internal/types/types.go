@@ -3,6 +3,19 @@
 
 package types
 
+type CreatePermissionReq struct {
+	Name        string `json:"name"`                 // 权限名称
+	Code        string `json:"code"`                 // 权限标识
+	Type        int    `json:"type"`                 // 类型
+	Path        string `json:"path,optional"`        // 路径
+	Method      string `json:"method,optional"`      // HTTP方法
+	ParentId    int64  `json:"parentId"`             // 父级ID
+	Icon        string `json:"icon,optional"`        // 图标
+	Component   string `json:"component,optional"`   // 前端组件
+	Sort        int    `json:"sort,default=0"`       // 排序
+	Description string `json:"description,optional"` // 描述
+}
+
 type CreateRoleReq struct {
 	Name          string  `json:"name" validate:"required"`
 	Code          string  `json:"code" validate:"required"`
@@ -11,12 +24,19 @@ type CreateRoleReq struct {
 }
 
 type CreateUserReq struct {
-	Username string  `json:"username"`
-	Password string  `json:"password"`
-	Nickname string  `json:"nickname,optional"`
-	Email    string  `json:"email,optional"`
-	Phone    string  `json:"phone,optional"`
-	RoleIds  []int64 `json:"roleIds,optional"`
+	No                  string `json:"no"`
+	Name                string `json:"name"`
+	Phone               string `json:"phone"`
+	Role                int    `json:"role"`
+	PwdHashed           string `json:"pwd_hashed"`
+	PwdSalt             string `json:"pwd_salt"`
+	DisableStatus       int    `json:"disable_status"`
+	ParentDisableStatus int    `json:"parent_disable_status"`
+	Company             string `json:"company"`
+	Email               string `json:"email"`
+	Gender              int    `json:"gender"`
+	Icon                string `json:"icon"`
+	Roles               []int  `json:"roles"` // 角色ID列表
 }
 
 type IDRequest struct {
@@ -24,8 +44,8 @@ type IDRequest struct {
 }
 
 type LoginReq struct {
-	Username string `json:"username" validate:"required"`
-	Password string `json:"password" validate:"required"`
+	Phone string `json:"phone"` // 电话
+	Pwd   string `json:"pwd"`   // 密码
 }
 
 type LoginResp struct {
@@ -54,15 +74,35 @@ type PageResponse struct {
 
 type PermissionInfo struct {
 	Id          int64            `json:"id"`
-	Name        string           `json:"name"`
-	Code        string           `json:"code"`
-	Type        int              `json:"type"`
-	Path        string           `json:"path"`
-	Action      int              `json:"action"`
-	ParentId    int64            `json:"parentId"`
-	Description string           `json:"description"`
-	Status      int8             `json:"status"`
-	Children    []PermissionInfo `json:"children,optional"`
+	Name        string           `json:"name"`                 // 权限名称
+	Code        string           `json:"code"`                 // 权限标识
+	Type        int              `json:"type"`                 // 类型(1:目录,2:菜单,3:按钮)
+	Path        string           `json:"path"`                 // 路径
+	Method      string           `json:"method,optional"`      // HTTP方法
+	ParentId    int64            `json:"parentId"`             // 父级ID
+	Icon        string           `json:"icon,optional"`        // 图标
+	Component   string           `json:"component,optional"`   // 前端组件
+	Sort        int              `json:"sort"`                 // 排序
+	Status      int8             `json:"status"`               // 状态(0:禁用,1:启用)
+	Description string           `json:"description,optional"` // 描述
+	Children    []PermissionInfo `json:"children,optional"`    // 子权限
+	CreatedAt   int64            `json:"createdAt"`            // 创建时间
+	UpdatedAt   int64            `json:"updatedAt"`            // 更新时间
+}
+
+type PermissionListReq struct {
+	Name     string `form:"name,optional"`       // 权限名称
+	Code     string `form:"code,optional"`       // 权限标识
+	Type     int    `form:"type,optional"`       // 类型
+	Status   int8   `form:"status,optional"`     // 状态
+	ParentId int64  `form:"parentId,optional"`   // 父级ID
+	Page     int64  `form:"page,default=1"`      // 页码
+	PageSize int64  `form:"pageSize,default=20"` // 每页数量
+}
+
+type PermissionListResp struct {
+	Total int64            `json:"total"`
+	List  []PermissionInfo `json:"list"`
 }
 
 type PermissionTreeResp struct {
@@ -95,9 +135,29 @@ type RoleListResp struct {
 	List  []RoleInfo `json:"list"`
 }
 
+type StatusRequest struct {
+	ID     int `json:"id"`     // ID
+	Status int `json:"status"` // 状态
+}
+
 type TimeRange struct {
 	StartTime string `form:"start_time,optional"` // 开始时间
 	EndTime   string `form:"end_time,optional"`   // 结束时间
+}
+
+type UpdatePermissionReq struct {
+	Id          int64  `json:"id"`                   // 权限ID
+	Name        string `json:"name,optional"`        // 权限名称
+	Code        string `json:"code,optional"`        // 权限标识
+	Type        int    `json:"type,optional"`        // 类型
+	Path        string `json:"path,optional"`        // 路径
+	Method      string `json:"method,optional"`      // HTTP方法
+	ParentId    int64  `json:"parentId,optional"`    // 父级ID
+	Icon        string `json:"icon,optional"`        // 图标
+	Component   string `json:"component,optional"`   // 前端组件
+	Sort        int    `json:"sort,optional"`        // 排序
+	Status      int8   `json:"status,optional"`      // 状态
+	Description string `json:"description,optional"` // 描述
 }
 
 type UpdateRoleReq struct {
@@ -108,45 +168,35 @@ type UpdateRoleReq struct {
 }
 
 type UpdateUserReq struct {
-	Id       int64   `path:"id"`
-	Nickname string  `json:"nickname,optional"`
-	Email    string  `json:"email,optional"`
-	Phone    string  `json:"phone,optional"`
-	Status   int8    `json:"status,optional"`
-	RoleIds  []int64 `json:"roleIds,optional"`
+	Id   int64  `path:"id"`
+	Name string `json:"name"`
 }
 
-type UserInfo struct {
-	Id        int64    `json:"id"`
-	Username  string   `json:"username"`
-	Nickname  string   `json:"nickname"`
-	Email     string   `json:"email"`
-	Phone     string   `json:"phone"`
-	Status    int8     `json:"status"`
-	Roles     []string `json:"roles"`
-	CreatedAt string   `json:"createdAt"`
-}
-
-type UserInfoResp struct {
-	Id          int64    `json:"id"`
-	Username    string   `json:"username"`
-	Nickname    string   `json:"nickname"`
-	Avatar      string   `json:"avatar"`
-	Email       string   `json:"email"`
-	Phone       string   `json:"phone"`
-	Roles       []string `json:"roles"`
-	Permissions []string `json:"permissions"`
+type UserInfoResponse struct {
+	ID          int    `json:"id"`           // 用户id
+	Uid         int    `json:"uid"`          // 用户id
+	Name        string `json:"name"`         // 企业名称
+	No          string `json:"no"`           // 企业编号
+	Phone       string `json:"phone"`        // 企业号码
+	StartAt     string `json:"start_at"`     // 合作开始时间
+	EndAt       string `json:"end_at"`       // 合作结束时间
+	Email       string `json:"email"`        // 邮箱
+	Province    string `json:"province"`     // 所在省份
+	City        string `json:"city"`         // 所在地区
+	Address     string `json:"address"`      // 具体地址
+	CompanyDesc string `json:"company_desc"` // 企业介绍
+	Status      int    `json:"status"`       // 状态
+	Roles       []int  `json:"roles"`        // 角色ID列表
 }
 
 type UserListReq struct {
-	Page     int    `form:"page,default=1"`
-	PageSize int    `form:"pageSize,default=20"`
-	Username string `form:"username,optional"`
-	Phone    string `form:"phone,optional"`
-	Status   int8   `form:"status,optional"`
+	PageRequest
+	Name   string `form:"name,optional"`
+	Phone  string `form:"phone,optional"`
+	Status int    `form:"status,optional"`
 }
 
 type UserListResp struct {
-	Total int64      `json:"total"`
-	List  []UserInfo `json:"list"`
+	Page *PageResponse       `json:"page"` // 分页
+	List []*UserInfoResponse `json:"list"` // 列表
 }

@@ -45,7 +45,7 @@ type (
 @server(
 	prefix: /api/v1/role
 	group: role
-	middleware: Auth
+	middleware: AuthMiddleware
 )
 service auth-api {
 	@doc "创建角色"
@@ -58,7 +58,7 @@ service auth-api {
 
 	@doc "获取角色详情"
 	@handler Detail
-	post /detail returns (RoleInfo)
+	post /detail (IDRequest) returns (RoleInfo)
 
 	@doc "获取角色列表"
 	@handler List

@@ -51,13 +51,13 @@ func (rc *RoleCreate) SetNillableDescription(s *string) *RoleCreate {
 }
 
 // SetStatus sets the "status" field.
-func (rc *RoleCreate) SetStatus(i int8) *RoleCreate {
+func (rc *RoleCreate) SetStatus(i int) *RoleCreate {
 	rc.mutation.SetStatus(i)
 	return rc
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (rc *RoleCreate) SetNillableStatus(i *int8) *RoleCreate {
+func (rc *RoleCreate) SetNillableStatus(i *int) *RoleCreate {
 	if i != nil {
 		rc.SetStatus(*i)
 	}
@@ -238,7 +238,7 @@ func (rc *RoleCreate) createSpec() (*Role, *sqlgraph.CreateSpec) {
 		_node.Description = value
 	}
 	if value, ok := rc.mutation.Status(); ok {
-		_spec.SetField(role.FieldStatus, field.TypeInt8, value)
+		_spec.SetField(role.FieldStatus, field.TypeInt, value)
 		_node.Status = value
 	}
 	if value, ok := rc.mutation.CreatedAt(); ok {
@@ -376,7 +376,7 @@ func (u *RoleUpsert) ClearDescription() *RoleUpsert {
 }
 
 // SetStatus sets the "status" field.
-func (u *RoleUpsert) SetStatus(v int8) *RoleUpsert {
+func (u *RoleUpsert) SetStatus(v int) *RoleUpsert {
 	u.Set(role.FieldStatus, v)
 	return u
 }
@@ -388,7 +388,7 @@ func (u *RoleUpsert) UpdateStatus() *RoleUpsert {
 }
 
 // AddStatus adds v to the "status" field.
-func (u *RoleUpsert) AddStatus(v int8) *RoleUpsert {
+func (u *RoleUpsert) AddStatus(v int) *RoleUpsert {
 	u.Add(role.FieldStatus, v)
 	return u
 }
@@ -507,14 +507,14 @@ func (u *RoleUpsertOne) ClearDescription() *RoleUpsertOne {
 }
 
 // SetStatus sets the "status" field.
-func (u *RoleUpsertOne) SetStatus(v int8) *RoleUpsertOne {
+func (u *RoleUpsertOne) SetStatus(v int) *RoleUpsertOne {
 	return u.Update(func(s *RoleUpsert) {
 		s.SetStatus(v)
 	})
 }
 
 // AddStatus adds v to the "status" field.
-func (u *RoleUpsertOne) AddStatus(v int8) *RoleUpsertOne {
+func (u *RoleUpsertOne) AddStatus(v int) *RoleUpsertOne {
 	return u.Update(func(s *RoleUpsert) {
 		s.AddStatus(v)
 	})
@@ -809,14 +809,14 @@ func (u *RoleUpsertBulk) ClearDescription() *RoleUpsertBulk {
 }
 
 // SetStatus sets the "status" field.
-func (u *RoleUpsertBulk) SetStatus(v int8) *RoleUpsertBulk {
+func (u *RoleUpsertBulk) SetStatus(v int) *RoleUpsertBulk {
 	return u.Update(func(s *RoleUpsert) {
 		s.SetStatus(v)
 	})
 }
 
 // AddStatus adds v to the "status" field.
-func (u *RoleUpsertBulk) AddStatus(v int8) *RoleUpsertBulk {
+func (u *RoleUpsertBulk) AddStatus(v int) *RoleUpsertBulk {
 	return u.Update(func(s *RoleUpsert) {
 		s.AddStatus(v)
 	})

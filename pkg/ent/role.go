@@ -24,7 +24,7 @@ type Role struct {
 	// 角色描述
 	Description string `json:"description,omitempty"`
 	// 状态: 1:启用, 2:禁用
-	Status int8 `json:"status,omitempty"`
+	Status int `json:"status,omitempty"`
 	// 创建时间
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// 更新时间
@@ -118,7 +118,7 @@ func (r *Role) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
-				r.Status = int8(value.Int64)
+				r.Status = int(value.Int64)
 			}
 		case role.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {

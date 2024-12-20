@@ -98,13 +98,13 @@ func (pc *PermissionCreate) SetNillableDescription(s *string) *PermissionCreate 
 }
 
 // SetStatus sets the "status" field.
-func (pc *PermissionCreate) SetStatus(i int8) *PermissionCreate {
+func (pc *PermissionCreate) SetStatus(i int) *PermissionCreate {
 	pc.mutation.SetStatus(i)
 	return pc
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (pc *PermissionCreate) SetNillableStatus(i *int8) *PermissionCreate {
+func (pc *PermissionCreate) SetNillableStatus(i *int) *PermissionCreate {
 	if i != nil {
 		pc.SetStatus(*i)
 	}
@@ -293,7 +293,7 @@ func (pc *PermissionCreate) createSpec() (*Permission, *sqlgraph.CreateSpec) {
 		_node.Description = value
 	}
 	if value, ok := pc.mutation.Status(); ok {
-		_spec.SetField(permission.FieldStatus, field.TypeInt8, value)
+		_spec.SetField(permission.FieldStatus, field.TypeInt, value)
 		_node.Status = value
 	}
 	if value, ok := pc.mutation.CreatedAt(); ok {
@@ -499,7 +499,7 @@ func (u *PermissionUpsert) ClearDescription() *PermissionUpsert {
 }
 
 // SetStatus sets the "status" field.
-func (u *PermissionUpsert) SetStatus(v int8) *PermissionUpsert {
+func (u *PermissionUpsert) SetStatus(v int) *PermissionUpsert {
 	u.Set(permission.FieldStatus, v)
 	return u
 }
@@ -511,7 +511,7 @@ func (u *PermissionUpsert) UpdateStatus() *PermissionUpsert {
 }
 
 // AddStatus adds v to the "status" field.
-func (u *PermissionUpsert) AddStatus(v int8) *PermissionUpsert {
+func (u *PermissionUpsert) AddStatus(v int) *PermissionUpsert {
 	u.Add(permission.FieldStatus, v)
 	return u
 }
@@ -728,14 +728,14 @@ func (u *PermissionUpsertOne) ClearDescription() *PermissionUpsertOne {
 }
 
 // SetStatus sets the "status" field.
-func (u *PermissionUpsertOne) SetStatus(v int8) *PermissionUpsertOne {
+func (u *PermissionUpsertOne) SetStatus(v int) *PermissionUpsertOne {
 	return u.Update(func(s *PermissionUpsert) {
 		s.SetStatus(v)
 	})
 }
 
 // AddStatus adds v to the "status" field.
-func (u *PermissionUpsertOne) AddStatus(v int8) *PermissionUpsertOne {
+func (u *PermissionUpsertOne) AddStatus(v int) *PermissionUpsertOne {
 	return u.Update(func(s *PermissionUpsert) {
 		s.AddStatus(v)
 	})
@@ -1128,14 +1128,14 @@ func (u *PermissionUpsertBulk) ClearDescription() *PermissionUpsertBulk {
 }
 
 // SetStatus sets the "status" field.
-func (u *PermissionUpsertBulk) SetStatus(v int8) *PermissionUpsertBulk {
+func (u *PermissionUpsertBulk) SetStatus(v int) *PermissionUpsertBulk {
 	return u.Update(func(s *PermissionUpsert) {
 		s.SetStatus(v)
 	})
 }
 
 // AddStatus adds v to the "status" field.
-func (u *PermissionUpsertBulk) AddStatus(v int8) *PermissionUpsertBulk {
+func (u *PermissionUpsertBulk) AddStatus(v int) *PermissionUpsertBulk {
 	return u.Update(func(s *PermissionUpsert) {
 		s.AddStatus(v)
 	})
